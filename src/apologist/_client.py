@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import pet, user
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, ApologistError
 from ._base_client import (
@@ -29,7 +29,12 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.store import store
+
+if TYPE_CHECKING:
+    from .resources import pet, user, store
+    from .resources.pet import PetResource, AsyncPetResource
+    from .resources.user import UserResource, AsyncUserResource
+    from .resources.store.store import StoreResource, AsyncStoreResource
 
 __all__ = [
     "Timeout",
@@ -44,12 +49,6 @@ __all__ = [
 
 
 class Apologist(SyncAPIClient):
-    pet: pet.PetResource
-    store: store.StoreResource
-    user: user.UserResource
-    with_raw_response: ApologistWithRawResponse
-    with_streaming_response: ApologistWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -104,11 +103,31 @@ class Apologist(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.pet = pet.PetResource(self)
-        self.store = store.StoreResource(self)
-        self.user = user.UserResource(self)
-        self.with_raw_response = ApologistWithRawResponse(self)
-        self.with_streaming_response = ApologistWithStreamedResponse(self)
+    @cached_property
+    def pet(self) -> PetResource:
+        from .resources.pet import PetResource
+
+        return PetResource(self)
+
+    @cached_property
+    def store(self) -> StoreResource:
+        from .resources.store import StoreResource
+
+        return StoreResource(self)
+
+    @cached_property
+    def user(self) -> UserResource:
+        from .resources.user import UserResource
+
+        return UserResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> ApologistWithRawResponse:
+        return ApologistWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> ApologistWithStreamedResponse:
+        return ApologistWithStreamedResponse(self)
 
     @property
     @override
@@ -216,12 +235,6 @@ class Apologist(SyncAPIClient):
 
 
 class AsyncApologist(AsyncAPIClient):
-    pet: pet.AsyncPetResource
-    store: store.AsyncStoreResource
-    user: user.AsyncUserResource
-    with_raw_response: AsyncApologistWithRawResponse
-    with_streaming_response: AsyncApologistWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -276,11 +289,31 @@ class AsyncApologist(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.pet = pet.AsyncPetResource(self)
-        self.store = store.AsyncStoreResource(self)
-        self.user = user.AsyncUserResource(self)
-        self.with_raw_response = AsyncApologistWithRawResponse(self)
-        self.with_streaming_response = AsyncApologistWithStreamedResponse(self)
+    @cached_property
+    def pet(self) -> AsyncPetResource:
+        from .resources.pet import AsyncPetResource
+
+        return AsyncPetResource(self)
+
+    @cached_property
+    def store(self) -> AsyncStoreResource:
+        from .resources.store import AsyncStoreResource
+
+        return AsyncStoreResource(self)
+
+    @cached_property
+    def user(self) -> AsyncUserResource:
+        from .resources.user import AsyncUserResource
+
+        return AsyncUserResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncApologistWithRawResponse:
+        return AsyncApologistWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncApologistWithStreamedResponse:
+        return AsyncApologistWithStreamedResponse(self)
 
     @property
     @override
@@ -388,31 +421,103 @@ class AsyncApologist(AsyncAPIClient):
 
 
 class ApologistWithRawResponse:
+    _client: Apologist
+
     def __init__(self, client: Apologist) -> None:
-        self.pet = pet.PetResourceWithRawResponse(client.pet)
-        self.store = store.StoreResourceWithRawResponse(client.store)
-        self.user = user.UserResourceWithRawResponse(client.user)
+        self._client = client
+
+    @cached_property
+    def pet(self) -> pet.PetResourceWithRawResponse:
+        from .resources.pet import PetResourceWithRawResponse
+
+        return PetResourceWithRawResponse(self._client.pet)
+
+    @cached_property
+    def store(self) -> store.StoreResourceWithRawResponse:
+        from .resources.store import StoreResourceWithRawResponse
+
+        return StoreResourceWithRawResponse(self._client.store)
+
+    @cached_property
+    def user(self) -> user.UserResourceWithRawResponse:
+        from .resources.user import UserResourceWithRawResponse
+
+        return UserResourceWithRawResponse(self._client.user)
 
 
 class AsyncApologistWithRawResponse:
+    _client: AsyncApologist
+
     def __init__(self, client: AsyncApologist) -> None:
-        self.pet = pet.AsyncPetResourceWithRawResponse(client.pet)
-        self.store = store.AsyncStoreResourceWithRawResponse(client.store)
-        self.user = user.AsyncUserResourceWithRawResponse(client.user)
+        self._client = client
+
+    @cached_property
+    def pet(self) -> pet.AsyncPetResourceWithRawResponse:
+        from .resources.pet import AsyncPetResourceWithRawResponse
+
+        return AsyncPetResourceWithRawResponse(self._client.pet)
+
+    @cached_property
+    def store(self) -> store.AsyncStoreResourceWithRawResponse:
+        from .resources.store import AsyncStoreResourceWithRawResponse
+
+        return AsyncStoreResourceWithRawResponse(self._client.store)
+
+    @cached_property
+    def user(self) -> user.AsyncUserResourceWithRawResponse:
+        from .resources.user import AsyncUserResourceWithRawResponse
+
+        return AsyncUserResourceWithRawResponse(self._client.user)
 
 
 class ApologistWithStreamedResponse:
+    _client: Apologist
+
     def __init__(self, client: Apologist) -> None:
-        self.pet = pet.PetResourceWithStreamingResponse(client.pet)
-        self.store = store.StoreResourceWithStreamingResponse(client.store)
-        self.user = user.UserResourceWithStreamingResponse(client.user)
+        self._client = client
+
+    @cached_property
+    def pet(self) -> pet.PetResourceWithStreamingResponse:
+        from .resources.pet import PetResourceWithStreamingResponse
+
+        return PetResourceWithStreamingResponse(self._client.pet)
+
+    @cached_property
+    def store(self) -> store.StoreResourceWithStreamingResponse:
+        from .resources.store import StoreResourceWithStreamingResponse
+
+        return StoreResourceWithStreamingResponse(self._client.store)
+
+    @cached_property
+    def user(self) -> user.UserResourceWithStreamingResponse:
+        from .resources.user import UserResourceWithStreamingResponse
+
+        return UserResourceWithStreamingResponse(self._client.user)
 
 
 class AsyncApologistWithStreamedResponse:
+    _client: AsyncApologist
+
     def __init__(self, client: AsyncApologist) -> None:
-        self.pet = pet.AsyncPetResourceWithStreamingResponse(client.pet)
-        self.store = store.AsyncStoreResourceWithStreamingResponse(client.store)
-        self.user = user.AsyncUserResourceWithStreamingResponse(client.user)
+        self._client = client
+
+    @cached_property
+    def pet(self) -> pet.AsyncPetResourceWithStreamingResponse:
+        from .resources.pet import AsyncPetResourceWithStreamingResponse
+
+        return AsyncPetResourceWithStreamingResponse(self._client.pet)
+
+    @cached_property
+    def store(self) -> store.AsyncStoreResourceWithStreamingResponse:
+        from .resources.store import AsyncStoreResourceWithStreamingResponse
+
+        return AsyncStoreResourceWithStreamingResponse(self._client.store)
+
+    @cached_property
+    def user(self) -> user.AsyncUserResourceWithStreamingResponse:
+        from .resources.user import AsyncUserResourceWithStreamingResponse
+
+        return AsyncUserResourceWithStreamingResponse(self._client.user)
 
 
 Client = Apologist
