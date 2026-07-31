@@ -60,9 +60,9 @@ class CorpusClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.corpus.search_corpus(
@@ -108,9 +108,9 @@ class CorpusClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.corpus.log_corpus_view(
@@ -158,9 +158,9 @@ class CorpusClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.corpus.log_corpus_impression(
@@ -212,9 +212,9 @@ class CorpusClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.corpus.log_corpus_referral_redirect(
@@ -262,9 +262,9 @@ class CorpusClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.corpus.log_corpus_referral(
@@ -328,9 +328,9 @@ class AsyncCorpusClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -384,9 +384,9 @@ class AsyncCorpusClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -442,9 +442,9 @@ class AsyncCorpusClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -504,9 +504,9 @@ class AsyncCorpusClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -562,9 +562,9 @@ class AsyncCorpusClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 

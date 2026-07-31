@@ -88,9 +88,9 @@ class BenchmarksClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.benchmarks.list_benchmark_runs(
@@ -182,9 +182,9 @@ class BenchmarksClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.benchmarks.run_benchmark(
@@ -235,9 +235,9 @@ class BenchmarksClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.benchmarks.get_benchmark_run(
@@ -324,9 +324,9 @@ class AsyncBenchmarksClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -426,9 +426,9 @@ class AsyncBenchmarksClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -487,9 +487,9 @@ class AsyncBenchmarksClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 

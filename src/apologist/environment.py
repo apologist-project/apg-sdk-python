@@ -3,5 +3,5 @@
 import enum
 
 
-class ApologistAgentEnvironment(enum.Enum):
+class ApologistAgentClientEnvironment(enum.Enum):
     DEFAULT = "https://your-agent-domain.com/api/v1"

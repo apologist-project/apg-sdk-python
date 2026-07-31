@@ -57,10 +57,10 @@ if typing.TYPE_CHECKING:
     )
     from .channels import GetDiscordChannelStatusResponse, VerifyFacebookWebhookRequestHubMode
     from .chat import GetChatCompletionResponse, ListChatCompletionsResponse
-    from .client import ApologistAgent, AsyncApologistAgent
+    from .client import ApologistAgentClient, AsyncApologistAgentClient
     from .corpus import CorpusSearchRequestFilters, SearchCorpusResponse
     from .ct_as import MatchCtasResponse
-    from .environment import ApologistAgentEnvironment
+    from .environment import ApologistAgentClientEnvironment
     from .evaluators import (
         EvaluateContentResponse,
         EvaluatorRequestContent,
@@ -79,9 +79,9 @@ if typing.TYPE_CHECKING:
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "ApologistAgent": ".client",
-    "ApologistAgentEnvironment": ".environment",
-    "AsyncApologistAgent": ".client",
+    "ApologistAgentClient": ".client",
+    "ApologistAgentClientEnvironment": ".environment",
+    "AsyncApologistAgentClient": ".client",
     "BadRequestError": ".errors",
     "BenchmarkRunRequestContent": ".benchmarks",
     "BenchmarkRunRequestReasoningEffort": ".benchmarks",
@@ -178,9 +178,9 @@ def __dir__():
 
 
 __all__ = [
-    "ApologistAgent",
-    "ApologistAgentEnvironment",
-    "AsyncApologistAgent",
+    "ApologistAgentClient",
+    "ApologistAgentClientEnvironment",
+    "AsyncApologistAgentClient",
     "BadRequestError",
     "BenchmarkRunRequestContent",
     "BenchmarkRunRequestReasoningEffort",

@@ -7,7 +7,7 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import ApologistAgentEnvironment
+from .environment import ApologistAgentClientEnvironment
 
 if typing.TYPE_CHECKING:
     from .benchmarks.client import AsyncBenchmarksClient, BenchmarksClient
@@ -20,7 +20,7 @@ if typing.TYPE_CHECKING:
     from .users.client import AsyncUsersClient, UsersClient
 
 
-class ApologistAgent:
+class ApologistAgentClient:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -29,12 +29,12 @@ class ApologistAgent:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : ApologistAgentEnvironment
-        The environment to use for requests from the client. from .environment import ApologistAgentEnvironment
+    environment : ApologistAgentClientEnvironment
+        The environment to use for requests from the client. from .environment import ApologistAgentClientEnvironment
 
 
 
-        Defaults to ApologistAgentEnvironment.DEFAULT
+        Defaults to ApologistAgentClientEnvironment.DEFAULT
 
 
 
@@ -68,9 +68,9 @@ class ApologistAgent:
 
     Examples
     --------
-    from apologist import ApologistAgent
+    from apologist import ApologistAgentClient
 
-    client = ApologistAgent(
+    client = ApologistAgentClient(
         api_key="YOUR_API_KEY",
     )
     """
@@ -79,7 +79,7 @@ class ApologistAgent:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: ApologistAgentEnvironment = ApologistAgentEnvironment.DEFAULT,
+        environment: ApologistAgentClientEnvironment = ApologistAgentClientEnvironment.DEFAULT,
         domain: typing.Optional[str] = None,
         api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -96,7 +96,7 @@ class ApologistAgent:
         if domain is not None:
             _domain = domain if domain is not None else "your-agent-domain.com"
             _environment_url_templates = {
-                ApologistAgentEnvironment.DEFAULT: "https://{domain}/api/v1",
+                ApologistAgentClientEnvironment.DEFAULT: "https://{domain}/api/v1",
             }
             _url_template = _environment_url_templates.get(environment, "https://{domain}/api/v1")
             if base_url is None:
@@ -208,7 +208,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncApologistAgent:
+class AsyncApologistAgentClient:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -217,12 +217,12 @@ class AsyncApologistAgent:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : ApologistAgentEnvironment
-        The environment to use for requests from the client. from .environment import ApologistAgentEnvironment
+    environment : ApologistAgentClientEnvironment
+        The environment to use for requests from the client. from .environment import ApologistAgentClientEnvironment
 
 
 
-        Defaults to ApologistAgentEnvironment.DEFAULT
+        Defaults to ApologistAgentClientEnvironment.DEFAULT
 
 
 
@@ -256,9 +256,9 @@ class AsyncApologistAgent:
 
     Examples
     --------
-    from apologist import AsyncApologistAgent
+    from apologist import AsyncApologistAgentClient
 
-    client = AsyncApologistAgent(
+    client = AsyncApologistAgentClient(
         api_key="YOUR_API_KEY",
     )
     """
@@ -267,7 +267,7 @@ class AsyncApologistAgent:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: ApologistAgentEnvironment = ApologistAgentEnvironment.DEFAULT,
+        environment: ApologistAgentClientEnvironment = ApologistAgentClientEnvironment.DEFAULT,
         domain: typing.Optional[str] = None,
         api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -284,7 +284,7 @@ class AsyncApologistAgent:
         if domain is not None:
             _domain = domain if domain is not None else "your-agent-domain.com"
             _environment_url_templates = {
-                ApologistAgentEnvironment.DEFAULT: "https://{domain}/api/v1",
+                ApologistAgentClientEnvironment.DEFAULT: "https://{domain}/api/v1",
             }
             _url_template = _environment_url_templates.get(environment, "https://{domain}/api/v1")
             if base_url is None:
@@ -376,7 +376,7 @@ class AsyncApologistAgent:
         return self._shares
 
 
-def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ApologistAgentEnvironment) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ApologistAgentClientEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

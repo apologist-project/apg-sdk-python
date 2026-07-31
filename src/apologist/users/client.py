@@ -73,9 +73,9 @@ class UsersClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.users.list_users()
@@ -119,9 +119,9 @@ class UsersClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.users.list_user_flags()
@@ -148,9 +148,9 @@ class UsersClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.users.get_user(
@@ -196,9 +196,9 @@ class UsersClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.users.update_user(
@@ -271,9 +271,9 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -325,9 +325,9 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -366,9 +366,9 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -422,9 +422,9 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
