@@ -1,6 +1,6 @@
 # Reference
 ## Chat
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">list_chat_completions</a>(...) -> ListChatCompletionsResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">list_chat_completions</a>(...) -> ListChatCompletionsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,8 +27,8 @@ Returns a paginated list of chat completions (prompts) for the agent, with appli
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -207,7 +207,7 @@ client.chat.list_chat_completions()
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">create_chat_completion</a>(...) -> ChatCompletionResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">create_chat_completion</a>(...) -> ChatCompletionResponse</code></summary>
 <dl>
 <dd>
 
@@ -234,8 +234,8 @@ Creates a chat completion using the agent's configured model. Supports both stre
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -280,7 +280,7 @@ client.chat.create_chat_completion(
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">like_completion</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">like_completion</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -307,8 +307,8 @@ Updates the like status of a specific chat completion
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -362,7 +362,7 @@ client.chat.like_completion(
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">flag_completion</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">flag_completion</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -389,8 +389,8 @@ Updates the flagged status of a specific chat completion
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -444,7 +444,7 @@ client.chat.flag_completion(
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">feedback_completion</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">feedback_completion</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -471,8 +471,8 @@ Adds user feedback to a specific chat completion
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -526,7 +526,7 @@ client.chat.feedback_completion(
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">share_completion</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">share_completion</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -553,8 +553,8 @@ Creates a share record for a specific chat completion
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -623,7 +623,7 @@ client.chat.share_completion(
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="src/apologist_agent/chat/client.py">get_chat_completion</a>(...) -> GetChatCompletionResponse</code></summary>
+<details><summary><code>client.chat.<a href="src/apologist/chat/client.py">get_chat_completion</a>(...) -> GetChatCompletionResponse</code></summary>
 <dl>
 <dd>
 
@@ -650,8 +650,8 @@ Returns a single chat completion (prompt) by numeric id or UUID, including appli
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -697,7 +697,7 @@ client.chat.get_chat_completion(
 </details>
 
 ## Corpus
-<details><summary><code>client.corpus.<a href="src/apologist_agent/corpus/client.py">search_corpus</a>(...) -> SearchCorpusResponse</code></summary>
+<details><summary><code>client.corpus.<a href="src/apologist/corpus/client.py">search_corpus</a>(...) -> SearchCorpusResponse</code></summary>
 <dl>
 <dd>
 
@@ -724,8 +724,8 @@ Performs a semantic search across the agent's corpus of knowledge
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -794,7 +794,7 @@ client.corpus.search_corpus(
 </dl>
 </details>
 
-<details><summary><code>client.corpus.<a href="src/apologist_agent/corpus/client.py">log_corpus_view</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.corpus.<a href="src/apologist/corpus/client.py">log_corpus_view</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -821,8 +821,8 @@ Records that a user viewed a specific corpus item
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -893,7 +893,7 @@ client.corpus.log_corpus_view(
 </dl>
 </details>
 
-<details><summary><code>client.corpus.<a href="src/apologist_agent/corpus/client.py">log_corpus_impression</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.corpus.<a href="src/apologist/corpus/client.py">log_corpus_impression</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -920,8 +920,8 @@ Records that a corpus item was shown to a user
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -992,7 +992,7 @@ client.corpus.log_corpus_impression(
 </dl>
 </details>
 
-<details><summary><code>client.corpus.<a href="src/apologist_agent/corpus/client.py">log_corpus_referral_redirect</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.corpus.<a href="src/apologist/corpus/client.py">log_corpus_referral_redirect</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -1019,8 +1019,8 @@ Records a referral for a corpus item and, when a `url` is supplied, issues a 302
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1099,7 +1099,7 @@ client.corpus.log_corpus_referral_redirect(
 </dl>
 </details>
 
-<details><summary><code>client.corpus.<a href="src/apologist_agent/corpus/client.py">log_corpus_referral</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.corpus.<a href="src/apologist/corpus/client.py">log_corpus_referral</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -1126,8 +1126,8 @@ Records that a user was referred to a corpus item
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1199,7 +1199,7 @@ client.corpus.log_corpus_referral(
 </details>
 
 ## Evaluators
-<details><summary><code>client.evaluators.<a href="src/apologist_agent/evaluators/client.py">list_evaluations</a>(...) -> ListEvaluationsResponse</code></summary>
+<details><summary><code>client.evaluators.<a href="src/apologist/evaluators/client.py">list_evaluations</a>(...) -> ListEvaluationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1226,8 +1226,8 @@ Returns a paginated list of evaluations for the evaluator, scoped to the request
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1368,7 +1368,7 @@ client.evaluators.list_evaluations(
 </dl>
 </details>
 
-<details><summary><code>client.evaluators.<a href="src/apologist_agent/evaluators/client.py">evaluate_content</a>(...) -> EvaluateContentResponse</code></summary>
+<details><summary><code>client.evaluators.<a href="src/apologist/evaluators/client.py">evaluate_content</a>(...) -> EvaluateContentResponse</code></summary>
 <dl>
 <dd>
 
@@ -1395,8 +1395,8 @@ Runs an evaluation on the provided content using the specified evaluator
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1522,7 +1522,7 @@ client.evaluators.evaluate_content(
 </dl>
 </details>
 
-<details><summary><code>client.evaluators.<a href="src/apologist_agent/evaluators/client.py">get_evaluation</a>(...) -> GetEvaluationResponse</code></summary>
+<details><summary><code>client.evaluators.<a href="src/apologist/evaluators/client.py">get_evaluation</a>(...) -> GetEvaluationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1549,8 +1549,8 @@ Returns a single evaluation for the evaluator, scoped to the requesting agent.
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1605,7 +1605,7 @@ client.evaluators.get_evaluation(
 </details>
 
 ## CTAs
-<details><summary><code>client.ct_as.<a href="src/apologist_agent/ct_as/client.py">match_ctas</a>(...) -> MatchCtasResponse</code></summary>
+<details><summary><code>client.ct_as.<a href="src/apologist/ct_as/client.py">match_ctas</a>(...) -> MatchCtasResponse</code></summary>
 <dl>
 <dd>
 
@@ -1632,8 +1632,8 @@ Finds matching CTAs based on conversation context, user, session, device, or mes
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1678,7 +1678,7 @@ client.ct_as.match_ctas(
 </dl>
 </details>
 
-<details><summary><code>client.ct_as.<a href="src/apologist_agent/ct_as/client.py">log_cta_click</a>(...) -> SuccessResponse</code></summary>
+<details><summary><code>client.ct_as.<a href="src/apologist/ct_as/client.py">log_cta_click</a>(...) -> SuccessResponse</code></summary>
 <dl>
 <dd>
 
@@ -1705,8 +1705,8 @@ Records that a user clicked on a specific CTA
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1761,7 +1761,7 @@ client.ct_as.log_cta_click(
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/apologist_agent/users/client.py">list_users</a>(...) -> ListUsersResponse</code></summary>
+<details><summary><code>client.users.<a href="src/apologist/users/client.py">list_users</a>(...) -> ListUsersResponse</code></summary>
 <dl>
 <dd>
 
@@ -1788,8 +1788,8 @@ Returns a paginated list of users for the agent's team, with applied tags expand
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1880,7 +1880,7 @@ client.users.list_users()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/apologist_agent/users/client.py">list_user_flags</a>(...) -> ListUserFlagsResponse</code></summary>
+<details><summary><code>client.users.<a href="src/apologist/users/client.py">list_user_flags</a>(...) -> ListUserFlagsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1907,8 +1907,8 @@ Returns a paginated list of user flag definitions for the agent's team (all colu
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -1959,7 +1959,7 @@ client.users.list_user_flags()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/apologist_agent/users/client.py">get_user</a>(...) -> GetUserResponse</code></summary>
+<details><summary><code>client.users.<a href="src/apologist/users/client.py">get_user</a>(...) -> GetUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -1986,8 +1986,8 @@ Returns a single user by external id or internal id, with expanded tags and the 
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2032,7 +2032,7 @@ client.users.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/apologist_agent/users/client.py">update_user</a>(...) -> UpdateUserResponse</code></summary>
+<details><summary><code>client.users.<a href="src/apologist/users/client.py">update_user</a>(...) -> UpdateUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -2059,8 +2059,8 @@ Updates a user's external_id and/or tags and upserts the persisted responder for
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2130,7 +2130,7 @@ client.users.update_user(
 </details>
 
 ## Benchmarks
-<details><summary><code>client.benchmarks.<a href="src/apologist_agent/benchmarks/client.py">list_benchmark_runs</a>(...) -> ListBenchmarkRunsResponse</code></summary>
+<details><summary><code>client.benchmarks.<a href="src/apologist/benchmarks/client.py">list_benchmark_runs</a>(...) -> ListBenchmarkRunsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2157,8 +2157,8 @@ Returns a paginated list of runs for a benchmark, scoped to the requesting agent
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2291,7 +2291,7 @@ client.benchmarks.list_benchmark_runs(
 </dl>
 </details>
 
-<details><summary><code>client.benchmarks.<a href="src/apologist_agent/benchmarks/client.py">run_benchmark</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
+<details><summary><code>client.benchmarks.<a href="src/apologist/benchmarks/client.py">run_benchmark</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -2318,8 +2318,8 @@ Executes a benchmark run and returns the aggregated result with nested evaluator
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2476,7 +2476,7 @@ client.benchmarks.run_benchmark(
 </dl>
 </details>
 
-<details><summary><code>client.benchmarks.<a href="src/apologist_agent/benchmarks/client.py">get_benchmark_run</a>(...) -> GetBenchmarkRunResponse</code></summary>
+<details><summary><code>client.benchmarks.<a href="src/apologist/benchmarks/client.py">get_benchmark_run</a>(...) -> GetBenchmarkRunResponse</code></summary>
 <dl>
 <dd>
 
@@ -2503,8 +2503,8 @@ Returns a single benchmark run by id or UUID, scoped to the requesting agent, in
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2559,7 +2559,7 @@ client.benchmarks.get_benchmark_run(
 </details>
 
 ## Channels
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">get_discord_channel_status</a>(...) -> GetDiscordChannelStatusResponse</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">get_discord_channel_status</a>(...) -> GetDiscordChannelStatusResponse</code></summary>
 <dl>
 <dd>
 
@@ -2586,8 +2586,8 @@ Returns the status of the Discord channel. Used as a lightweight health/verifica
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2632,7 +2632,7 @@ client.channels.get_discord_channel_status(
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">receive_discord_interaction</a>(...)</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">receive_discord_interaction</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2659,8 +2659,8 @@ Receives Discord interaction callbacks for the channel. Requests are verified vi
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2734,7 +2734,7 @@ client.channels.receive_discord_interaction(
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">verify_facebook_webhook</a>(...) -> str</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">verify_facebook_webhook</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2761,8 +2761,8 @@ Handles the Meta webhook verification handshake, echoing `hub.challenge` when `h
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2833,7 +2833,7 @@ client.channels.verify_facebook_webhook(
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">receive_facebook_message</a>(...)</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">receive_facebook_message</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2860,8 +2860,8 @@ Receives Facebook/Messenger (and Instagram-style) message events for the channel
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2917,7 +2917,7 @@ client.channels.receive_facebook_message(
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">get_instagram_privacy_policy</a>(...) -> str</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">get_instagram_privacy_policy</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2944,8 +2944,8 @@ Returns a static HTML privacy policy page for the Instagram integration.
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -2990,7 +2990,7 @@ client.channels.get_instagram_privacy_policy(
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">receive_telegram_update</a>(...)</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">receive_telegram_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3017,8 +3017,8 @@ Receives Telegram bot update events for the channel. Non-message updates are ack
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -3074,7 +3074,7 @@ client.channels.receive_telegram_update(
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="src/apologist_agent/channels/client.py">receive_twilio_message</a>(...)</code></summary>
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">receive_twilio_message</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3101,8 +3101,8 @@ Receives inbound Twilio messages for the channel as form-encoded data. Payload f
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
@@ -3164,7 +3164,7 @@ client.channels.receive_twilio_message(
 </details>
 
 ## Shares
-<details><summary><code>client.shares.<a href="src/apologist_agent/shares/client.py">get_shared_messages</a>(...) -> GetSharedMessagesResponse</code></summary>
+<details><summary><code>client.shares.<a href="src/apologist/shares/client.py">get_shared_messages</a>(...) -> GetSharedMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -3191,8 +3191,8 @@ Public, unauthenticated read of the messages behind a share token. The token is 
 <dd>
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     api_key="<value>",
