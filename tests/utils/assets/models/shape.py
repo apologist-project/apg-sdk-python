@@ -8,7 +8,7 @@ import typing
 
 import typing_extensions
 
-from apologist_agent.core.serialization import FieldMetadata
+from apologist.core.serialization import FieldMetadata
 
 
 class Base(typing_extensions.TypedDict):

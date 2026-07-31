@@ -1,7 +1,7 @@
 # ApologistAi Python Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fapologist-project%2Fapg-sdk-python)
-[![pypi](https://img.shields.io/pypi/v/apologist-agent)](https://pypi.python.org/pypi/apologist-agent)
+[![pypi](https://img.shields.io/pypi/v/apologist)](https://pypi.python.org/pypi/apologist)
 
 The ApologistAi Python library provides convenient access to the ApologistAi APIs from Python.
 
@@ -34,7 +34,7 @@ The full API of this library can be found in [api.md](api.md).
 ## Installation
 
 ```sh
-pip install apologist-agent
+pip install apologist
 ```
 
 ## Reference
@@ -46,7 +46,7 @@ A full reference for this library is available [here](https://github.com/apologi
 Instantiate and use the client with the following:
 
 ```python
-from apologist_agent import ApologistAgent
+from apologist import ApologistAgent
 
 client = ApologistAgent(
     api_key="<value>",
@@ -248,8 +248,8 @@ Note that requests that time out are [retried twice by default](#retries).
 This SDK allows you to configure different environments for API requests.
 
 ```python
-from apologist_agent import ApologistAgent
-from apologist_agent.environment import ApologistAgentEnvironment
+from apologist import ApologistAgent
+from apologist.environment import ApologistAgentEnvironment
 
 client = ApologistAgent(
     environment=ApologistAgentEnvironment.DEFAULT,
@@ -263,7 +263,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from apologist_agent import AsyncApologistAgent
+from apologist import AsyncApologistAgent
 
 client = AsyncApologistAgent(
     api_key="<value>",
@@ -285,7 +285,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from apologist_agent.core.api_error import ApiError
+from apologist.core.api_error import ApiError
 
 try:
     client.chat.create_chat_completion(...)
@@ -302,7 +302,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from apologist_agent import ApologistAgent
+from apologist import ApologistAgent
 
 client = ApologistAgent(...)
 response = client.chat.with_raw_response.create_chat_completion(...)
@@ -346,7 +346,7 @@ client.chat.create_chat_completion(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from apologist_agent import ApologistAgent
+from apologist import ApologistAgent
 
 client = ApologistAgent(..., timeout=20.0)
 
@@ -363,7 +363,7 @@ and transports.
 
 ```python
 import httpx
-from apologist_agent import ApologistAgent
+from apologist import ApologistAgent
 
 client = ApologistAgent(
     ...,

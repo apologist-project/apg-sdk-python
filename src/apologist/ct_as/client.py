@@ -48,7 +48,7 @@ class CtAsClient:
 
         Examples
         --------
-        from apologist_agent import ApologistAgent
+        from apologist import ApologistAgent
 
         client = ApologistAgent(
             api_key="YOUR_API_KEY",
@@ -83,7 +83,7 @@ class CtAsClient:
 
         Examples
         --------
-        from apologist_agent import ApologistAgent
+        from apologist import ApologistAgent
 
         client = ApologistAgent(
             api_key="YOUR_API_KEY",
@@ -134,7 +134,7 @@ class AsyncCtAsClient:
         --------
         import asyncio
 
-        from apologist_agent import AsyncApologistAgent
+        from apologist import AsyncApologistAgent
 
         client = AsyncApologistAgent(
             api_key="YOUR_API_KEY",
@@ -177,7 +177,7 @@ class AsyncCtAsClient:
         --------
         import asyncio
 
-        from apologist_agent import AsyncApologistAgent
+        from apologist import AsyncApologistAgent
 
         client = AsyncApologistAgent(
             api_key="YOUR_API_KEY",

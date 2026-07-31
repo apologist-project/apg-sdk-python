@@ -1,10 +1,10 @@
 [project]
-name = "apologist-agent"
+name = "apologist"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "apologist-agent"
-version = "1.0.2"
+name = "apologist"
+version = "1.0.3"
 description = ""
 readme = "README.md"
 authors = []
@@ -29,7 +29,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "apologist_agent", from = "src"}
+    { include = "apologist", from = "src"}
 ]
 
 [tool.poetry.urls]
