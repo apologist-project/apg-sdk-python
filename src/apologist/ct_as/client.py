@@ -48,9 +48,9 @@ class CtAsClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.ct_as.match_ctas(
@@ -83,9 +83,9 @@ class CtAsClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.ct_as.log_cta_click(
@@ -134,9 +134,9 @@ class AsyncCtAsClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -177,9 +177,9 @@ class AsyncCtAsClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 

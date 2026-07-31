@@ -105,9 +105,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.list_chat_completions()
@@ -155,9 +155,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.create_chat_completion(
@@ -190,9 +190,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.like_completion(
@@ -226,9 +226,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.flag_completion(
@@ -262,9 +262,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.feedback_completion(
@@ -308,9 +308,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.share_completion(
@@ -343,9 +343,9 @@ class ChatClient:
 
         Examples
         --------
-        from apologist import ApologistAgent
+        from apologist import ApologistAgentClient
 
-        client = ApologistAgent(
+        client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
         client.chat.get_chat_completion(
@@ -448,9 +448,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -506,9 +506,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -549,9 +549,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -593,9 +593,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -637,9 +637,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -691,9 +691,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 
@@ -734,9 +734,9 @@ class AsyncChatClient:
         --------
         import asyncio
 
-        from apologist import AsyncApologistAgent
+        from apologist import AsyncApologistAgentClient
 
-        client = AsyncApologistAgent(
+        client = AsyncApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
 

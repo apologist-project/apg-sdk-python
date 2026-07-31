@@ -27,12 +27,12 @@ Returns a paginated list of chat completions (prompts) for the agent, with appli
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.list_chat_completions()
@@ -234,12 +234,12 @@ Creates a chat completion using the agent's configured model. Supports both stre
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.create_chat_completion(
@@ -307,12 +307,12 @@ Updates the like status of a specific chat completion
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.like_completion(
@@ -389,12 +389,12 @@ Updates the flagged status of a specific chat completion
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.flag_completion(
@@ -471,12 +471,12 @@ Adds user feedback to a specific chat completion
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.feedback_completion(
@@ -553,12 +553,12 @@ Creates a share record for a specific chat completion
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.share_completion(
@@ -650,12 +650,12 @@ Returns a single chat completion (prompt) by numeric id or UUID, including appli
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.chat.get_chat_completion(
@@ -724,12 +724,12 @@ Performs a semantic search across the agent's corpus of knowledge
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.corpus.search_corpus(
@@ -821,12 +821,12 @@ Records that a user viewed a specific corpus item
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.corpus.log_corpus_view(
@@ -920,12 +920,12 @@ Records that a corpus item was shown to a user
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.corpus.log_corpus_impression(
@@ -1019,12 +1019,12 @@ Records a referral for a corpus item and, when a `url` is supplied, issues a 302
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.corpus.log_corpus_referral_redirect(
@@ -1126,12 +1126,12 @@ Records that a user was referred to a corpus item
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.corpus.log_corpus_referral(
@@ -1226,12 +1226,12 @@ Returns a paginated list of evaluations for the evaluator, scoped to the request
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.evaluators.list_evaluations(
@@ -1395,12 +1395,12 @@ Runs an evaluation on the provided content using the specified evaluator
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.evaluators.evaluate_content(
@@ -1549,12 +1549,12 @@ Returns a single evaluation for the evaluator, scoped to the requesting agent.
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.evaluators.get_evaluation(
@@ -1632,12 +1632,12 @@ Finds matching CTAs based on conversation context, user, session, device, or mes
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.ct_as.match_ctas(
@@ -1705,12 +1705,12 @@ Records that a user clicked on a specific CTA
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.ct_as.log_cta_click(
@@ -1788,12 +1788,12 @@ Returns a paginated list of users for the agent's team, with applied tags expand
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.users.list_users()
@@ -1907,12 +1907,12 @@ Returns a paginated list of user flag definitions for the agent's team (all colu
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.users.list_user_flags()
@@ -1986,12 +1986,12 @@ Returns a single user by external id or internal id, with expanded tags and the 
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.users.get_user(
@@ -2059,12 +2059,12 @@ Updates a user's external_id and/or tags and upserts the persisted responder for
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.users.update_user(
@@ -2157,12 +2157,12 @@ Returns a paginated list of runs for a benchmark, scoped to the requesting agent
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.benchmarks.list_benchmark_runs(
@@ -2318,12 +2318,12 @@ Executes a benchmark run and returns the aggregated result with nested evaluator
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.benchmarks.run_benchmark(
@@ -2503,12 +2503,12 @@ Returns a single benchmark run by id or UUID, scoped to the requesting agent, in
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.benchmarks.get_benchmark_run(
@@ -2586,12 +2586,12 @@ Returns the status of the Discord channel. Used as a lightweight health/verifica
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.get_discord_channel_status(
@@ -2659,12 +2659,12 @@ Receives Discord interaction callbacks for the channel. Requests are verified vi
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.receive_discord_interaction(
@@ -2761,12 +2761,12 @@ Handles the Meta webhook verification handshake, echoing `hub.challenge` when `h
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.verify_facebook_webhook(
@@ -2860,12 +2860,12 @@ Receives Facebook/Messenger (and Instagram-style) message events for the channel
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.receive_facebook_message(
@@ -2944,12 +2944,12 @@ Returns a static HTML privacy policy page for the Instagram integration.
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.get_instagram_privacy_policy(
@@ -3017,12 +3017,12 @@ Receives Telegram bot update events for the channel. Non-message updates are ack
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.receive_telegram_update(
@@ -3101,12 +3101,12 @@ Receives inbound Twilio messages for the channel as form-encoded data. Payload f
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.channels.receive_twilio_message(
@@ -3191,12 +3191,12 @@ Public, unauthenticated read of the messages behind a share token. The token is 
 <dd>
 
 ```python
-from apologist import ApologistAgent
-from apologist.environment import ApologistAgentEnvironment
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
 
-client = ApologistAgent(
+client = ApologistAgentClient(
     api_key="<value>",
-    environment=ApologistAgentEnvironment.DEFAULT,
+    environment=ApologistAgentClientEnvironment.DEFAULT,
 )
 
 client.shares.get_shared_messages(
