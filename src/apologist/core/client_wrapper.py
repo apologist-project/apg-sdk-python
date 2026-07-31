@@ -33,12 +33,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "apologist/1.0.3",
+            "User-Agent": "apologist/1.0.4",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "apologist",
-            "X-Fern-SDK-Version": "1.0.3",
+            "X-Fern-SDK-Version": "1.0.4",
             **(self.get_custom_headers() or {}),
         }
         headers["x-api-key"] = self.api_key

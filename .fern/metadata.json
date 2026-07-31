@@ -6,8 +6,8 @@
     "client_class_name": "ApologistAgent",
     "package_name": "apologist"
   },
-  "originGitCommit": "eeb08f58c57d49db3a8891931778ee10a4f22395",
+  "originGitCommit": "5708980a105a22210c934b70877713b6dfe54650",
   "originGitCommitIsDirty": true,
   "invokedBy": "manual",
-  "sdkVersion": "1.0.3"
+  "sdkVersion": "1.0.4"
 }
