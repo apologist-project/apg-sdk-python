@@ -15,6 +15,11 @@ class ChatCompletionRequestMetadata(UniversalBaseModel):
     parent_host: typing.Optional[str] = None
     session: typing.Optional[str] = None
     device: typing.Optional[str] = None
+    referral_code: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Acquisition / campaign referral code stored on the user first-write-wins. Empty values are ignored; an existing user referral_code is never overwritten. The Agent UI maps ?ref=, then ?referral_code=, then ?utm_campaign= into this field.
+    """
+
     shared_prompt: typing.Optional[int] = None
     translation: typing.Optional[str] = None
     variables: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)

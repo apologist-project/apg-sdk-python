@@ -6,9 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import GetDiscordChannelStatusResponse, VerifyFacebookWebhookRequestHubMode
+    from .types import (
+        GetDiscordChannelStatusResponse,
+        GetLineChannelStatusResponse,
+        VerifyFacebookWebhookRequestHubMode,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "GetDiscordChannelStatusResponse": ".types",
+    "GetLineChannelStatusResponse": ".types",
     "VerifyFacebookWebhookRequestHubMode": ".types",
 }
 
@@ -34,4 +39,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetDiscordChannelStatusResponse", "VerifyFacebookWebhookRequestHubMode"]
+__all__ = ["GetDiscordChannelStatusResponse", "GetLineChannelStatusResponse", "VerifyFacebookWebhookRequestHubMode"]

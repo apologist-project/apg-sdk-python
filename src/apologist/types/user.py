@@ -14,6 +14,11 @@ class User(UniversalBaseModel):
     """
 
     external_id: typing.Optional[str] = None
+    referral_code: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    First-write-wins acquisition / campaign referral code.
+    """
+
     team_id: typing.Optional[int] = None
     created_at: typing.Optional[str] = None
     migrated_at: typing.Optional[str] = None

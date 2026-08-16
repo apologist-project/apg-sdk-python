@@ -185,7 +185,7 @@ class CorpusClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SuccessResponse:
         """
-        Records a referral for a corpus item and, when a `url` is supplied, issues a 302 redirect to it. Without a `url`, responds with a success message. Requires either the search API entitlement or a same-origin request.
+        Records a referral for a corpus item and, when a `url` is supplied, issues a 302 redirect to it. Without a `url`, responds with a success message. Requires either the search API entitlement or a signed `browser_key` cookie.
 
         Parameters
         ----------
@@ -475,7 +475,7 @@ class AsyncCorpusClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SuccessResponse:
         """
-        Records a referral for a corpus item and, when a `url` is supplied, issues a 302 redirect to it. Without a `url`, responds with a success message. Requires either the search API entitlement or a same-origin request.
+        Records a referral for a corpus item and, when a `url` is supplied, issues a 302 redirect to it. Without a `url`, responds with a success message. Requires either the search API entitlement or a signed `browser_key` cookie.
 
         Parameters
         ----------
