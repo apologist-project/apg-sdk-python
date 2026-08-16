@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawChannelsClient, RawChannelsClient
 from .types.get_discord_channel_status_response import GetDiscordChannelStatusResponse
+from .types.get_line_channel_status_response import GetLineChannelStatusResponse
 from .types.verify_facebook_webhook_request_hub_mode import VerifyFacebookWebhookRequestHubMode
 
 # this is used as the default value for optional parameters
@@ -112,6 +113,84 @@ class ChannelsClient:
             signature_timestamp=signature_timestamp,
             request=request,
             request_options=request_options,
+        )
+        return _response.data
+
+    def get_line_channel_status(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetLineChannelStatusResponse:
+        """
+        Returns the status of the LINE channel. Used as a lightweight health/verification endpoint.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetLineChannelStatusResponse
+            Channel status
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.channels.get_line_channel_status(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_line_channel_status(id, request_options=request_options)
+        return _response.data
+
+    def receive_line_webhook(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        line_signature: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Receives LINE Messaging API webhook events for the channel. Requests are verified via the `x-line-signature` HMAC-SHA256 (Base64) header using the channel secret unless an `api_key` is present. Payload shape is defined by LINE. The route acknowledges quickly and processes text `message` and `follow` events asynchronously.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        line_signature : typing.Optional[str]
+            Base64-encoded HMAC-SHA256 of the raw body keyed with the LINE channel secret. Required when the webhook URL does not include an api_key.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.channels.receive_line_webhook(
+            id="id",
+            request={"key": "value"},
+        )
+        """
+        _response = self._raw_client.receive_line_webhook(
+            id, request=request, line_signature=line_signature, request_options=request_options
         )
         return _response.data
 
@@ -427,6 +506,100 @@ class AsyncChannelsClient:
             signature_timestamp=signature_timestamp,
             request=request,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def get_line_channel_status(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetLineChannelStatusResponse:
+        """
+        Returns the status of the LINE channel. Used as a lightweight health/verification endpoint.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetLineChannelStatusResponse
+            Channel status
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.channels.get_line_channel_status(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_line_channel_status(id, request_options=request_options)
+        return _response.data
+
+    async def receive_line_webhook(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        line_signature: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Receives LINE Messaging API webhook events for the channel. Requests are verified via the `x-line-signature` HMAC-SHA256 (Base64) header using the channel secret unless an `api_key` is present. Payload shape is defined by LINE. The route acknowledges quickly and processes text `message` and `follow` events asynchronously.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        line_signature : typing.Optional[str]
+            Base64-encoded HMAC-SHA256 of the raw body keyed with the LINE channel secret. Required when the webhook URL does not include an api_key.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.channels.receive_line_webhook(
+                id="id",
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.receive_line_webhook(
+            id, request=request, line_signature=line_signature, request_options=request_options
         )
         return _response.data
 

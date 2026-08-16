@@ -55,7 +55,11 @@ if typing.TYPE_CHECKING:
         GetBenchmarkRunResponse,
         ListBenchmarkRunsResponse,
     )
-    from .channels import GetDiscordChannelStatusResponse, VerifyFacebookWebhookRequestHubMode
+    from .channels import (
+        GetDiscordChannelStatusResponse,
+        GetLineChannelStatusResponse,
+        VerifyFacebookWebhookRequestHubMode,
+    )
     from .chat import GetChatCompletionResponse, ListChatCompletionsResponse
     from .client import ApologistAgentClient, AsyncApologistAgentClient
     from .corpus import CorpusSearchRequestFilters, SearchCorpusResponse
@@ -115,6 +119,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetChatCompletionResponse": ".chat",
     "GetDiscordChannelStatusResponse": ".channels",
     "GetEvaluationResponse": ".evaluators",
+    "GetLineChannelStatusResponse": ".channels",
     "GetSharedMessagesResponse": ".shares",
     "GetUserResponse": ".users",
     "InternalServerError": ".errors",
@@ -214,6 +219,7 @@ __all__ = [
     "GetChatCompletionResponse",
     "GetDiscordChannelStatusResponse",
     "GetEvaluationResponse",
+    "GetLineChannelStatusResponse",
     "GetSharedMessagesResponse",
     "GetUserResponse",
     "InternalServerError",
