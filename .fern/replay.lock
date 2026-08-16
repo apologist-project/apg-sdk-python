@@ -18,7 +18,13 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-python-sdk: 5.24.1
-current_generation: d25290102f8042ecd56d95db27cd40987168e2f6
+  - commit_sha: b84f3cf1398476bb4f0a8580bdc91817886121dd
+    tree_hash: 42d896984e8f03e32c71bc6fc16ee905f5150c47
+    timestamp: 2026-08-16T19:21:10.052Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-python-sdk: 5.24.1
+current_generation: b84f3cf1398476bb4f0a8580bdc91817886121dd
 patches:
   - id: patch-7e6dbb95
     content_hash: sha256:ecfc02477ce8c06f153cb95a4fb9277b7e15f97c09e324b08a288a56b58ed435
@@ -64,6 +70,140 @@ patches:
         [tool.poetry]
         name = "apologist"
         version = "1.0.4"
+        description = ""
+        readme = "README.md"
+        authors = []
+        keywords = []
+
+        classifiers = [
+            "Intended Audience :: Developers",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
+            "Programming Language :: Python :: 3.15",
+            "Operating System :: OS Independent",
+            "Operating System :: POSIX",
+            "Operating System :: MacOS",
+            "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Typing :: Typed"
+        ]
+        packages = [
+            { include = "apologist", from = "src"}
+        ]
+
+        [tool.poetry.urls]
+        Repository = 'https://github.com/apologist-project/apg-sdk-python'
+
+        [tool.poetry.dependencies]
+        python = "^3.10"
+        aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
+        httpx = ">=0.21.2"
+        httpx-aiohttp = { version = "^0.1.8", optional = true, python = ">=3.10"}
+        pydantic = ">= 1.9.2"
+        pydantic-core = ">=2.18.2,<3.0.0"
+        typing_extensions = ">= 4.0.0"
+
+        [tool.poetry.group.dev.dependencies]
+        mypy = "==1.13.0"
+        pytest = "^9.0.3"
+        pytest-asyncio = "^1.0.0"
+        pytest-xdist = "^3.6.1"
+        python-dateutil = "^2.9.0"
+        types-python-dateutil = "^2.9.0.20240316"
+        urllib3 = ">=2.6.3,<3.0.0"
+        ruff = "==0.11.5"
+
+        [tool.pytest.ini_options]
+        testpaths = [ "tests" ]
+        asyncio_mode = "auto"
+        norecursedirs = [ "src" ]
+        markers = [
+            "aiohttp: tests that require httpx_aiohttp to be installed",
+        ]
+
+        [tool.mypy]
+        plugins = ["pydantic.mypy"]
+
+        [tool.ruff]
+        line-length = 120
+
+        [tool.ruff.lint]
+        select = [
+            "E",  # pycodestyle errors
+            "F",  # pyflakes
+            "I",  # isort
+        ]
+        ignore = [
+            "E402",  # Module level import not at top of file
+            "E501",  # Line too long
+            "E711",  # Comparison to `None` should be `cond is not None`
+            "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+            "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+            "E722",  # Do not use bare `except`
+            "E731",  # Do not assign a `lambda` expression, use a `def`
+            "F821",  # Undefined name
+            "F841"   # Local variable ... is assigned to but never used
+        ]
+
+        [tool.ruff.lint.isort]
+        section-order = ["future", "standard-library", "third-party", "first-party"]
+
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+
+        [tool.poetry.extras]
+        aiohttp=["aiohttp", "httpx-aiohttp"]
+    status: unresolved
+  - id: patch-0d521a94
+    content_hash: sha256:436ea1b3bdc746a75dc7a039cfb09b36cfc32c1b1cc7ade1c0e24d9e062a2654
+    original_commit: 0d521a94fc9932db008f1766ebd9f812f5275bce
+    original_message: Release 1.1.0.
+    original_author: Jake Carlson <jake@carlsonville.com>
+    base_generation: d14273d71b744098ec881dd20a18c908b63fd623
+    files:
+      - pyproject.toml
+    patch_content: |+
+      From 0d521a94fc9932db008f1766ebd9f812f5275bce Mon Sep 17 00:00:00 2001
+      From: Jake Carlson <jake@carlsonville.com>
+      Date: Sun, 16 Aug 2026 13:28:19 -0500
+      Subject: [PATCH] Release 1.1.0.
+
+      ---
+       pyproject.toml | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+      diff --git a/pyproject.toml b/pyproject.toml
+      index 6ee30c1..b62a20d 100644
+      --- a/pyproject.toml
+      +++ b/pyproject.toml
+      @@ -4,7 +4,7 @@ dynamic = ["version"]
+       
+       [tool.poetry]
+       name = "apologist"
+      -version = "1.0.7"
+      +version = "1.1.0"
+       description = ""
+       readme = "README.md"
+       authors = []
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      pyproject.toml: |
+        [project]
+        name = "apologist"
+        dynamic = ["version"]
+
+        [tool.poetry]
+        name = "apologist"
+        version = "1.1.0"
         description = ""
         readme = "README.md"
         authors = []

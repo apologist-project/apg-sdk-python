@@ -2558,6 +2558,432 @@ client.benchmarks.get_benchmark_run(
 </dl>
 </details>
 
+## Agent
+<details><summary><code>client.agent.<a href="src/apologist/agent/client.py">pause_agent</a>() -> PauseAgentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pauses the agent globally and fans out pause transition messages to open conversations. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.agent.pause_agent()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent.<a href="src/apologist/agent/client.py">resume_agent</a>() -> ResumeAgentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resumes the agent globally and fans out resume transition messages to open conversations. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.agent.resume_agent()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Conversations
+<details><summary><code>client.conversations.<a href="src/apologist/conversations/client.py">list_conversations</a>(...) -> ListConversationsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a paginated list of conversations for the requesting agent, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.conversations.list_conversations()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `typing.Optional[int]` — Results per page (clamped to 100).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversations.<a href="src/apologist/conversations/client.py">get_conversation</a>(...) -> GetConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a single conversation by internal UUID or team-scoped external id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.conversations.get_conversation(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The conversation UUID or team-scoped external id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversations.<a href="src/apologist/conversations/client.py">pause_conversation</a>(...) -> PauseConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pauses the agent on a conversation identified by internal UUID or team-scoped external id. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.conversations.pause_conversation(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The conversation UUID or team-scoped external id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversations.<a href="src/apologist/conversations/client.py">resume_conversation</a>(...) -> ResumeConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resumes the agent on a conversation identified by internal UUID or team-scoped external id. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.conversations.resume_conversation(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The conversation UUID or team-scoped external id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Channels
 <details><summary><code>client.channels.<a href="src/apologist/channels/client.py">get_discord_channel_status</a>(...) -> GetDiscordChannelStatusResponse</code></summary>
 <dl>
@@ -3309,6 +3735,197 @@ client.channels.receive_twilio_message(
 <dd>
 
 **body:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">verify_whats_app_webhook</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.channels.verify_whats_app_webhook(
+    id="id",
+    hub_mode="subscribe",
+    hub_verify_token="hub.verify_token",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hub_mode:** `VerifyWhatsAppWebhookRequestHubMode` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hub_verify_token:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hub_challenge:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">receive_whats_app_message</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.channels.receive_whats_app_message(
+    id="id",
+    request={
+        "key": "value"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Dict[str, typing.Any]` — WhatsApp Cloud API webhook payload (`entry` + `changes`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hub_signature256:** `typing.Optional[str]` — Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
     
 </dd>
 </dl>

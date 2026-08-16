@@ -6,17 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        GetDiscordChannelStatusResponse,
-        GetLineChannelStatusResponse,
-        VerifyFacebookWebhookRequestHubMode,
-        VerifyWhatsAppWebhookRequestHubMode,
-    )
+    from .pause_agent_response import PauseAgentResponse
+    from .resume_agent_response import ResumeAgentResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "GetDiscordChannelStatusResponse": ".types",
-    "GetLineChannelStatusResponse": ".types",
-    "VerifyFacebookWebhookRequestHubMode": ".types",
-    "VerifyWhatsAppWebhookRequestHubMode": ".types",
+    "PauseAgentResponse": ".pause_agent_response",
+    "ResumeAgentResponse": ".resume_agent_response",
 }
 
 
@@ -41,9 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "GetDiscordChannelStatusResponse",
-    "GetLineChannelStatusResponse",
-    "VerifyFacebookWebhookRequestHubMode",
-    "VerifyWhatsAppWebhookRequestHubMode",
-]
+__all__ = ["PauseAgentResponse", "ResumeAgentResponse"]

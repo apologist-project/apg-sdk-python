@@ -8,6 +8,7 @@ from .raw_client import AsyncRawChannelsClient, RawChannelsClient
 from .types.get_discord_channel_status_response import GetDiscordChannelStatusResponse
 from .types.get_line_channel_status_response import GetLineChannelStatusResponse
 from .types.verify_facebook_webhook_request_hub_mode import VerifyFacebookWebhookRequestHubMode
+from .types.verify_whats_app_webhook_request_hub_mode import VerifyWhatsAppWebhookRequestHubMode
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -387,6 +388,104 @@ class ChannelsClient:
         )
         """
         _response = self._raw_client.receive_twilio_message(id, from_=from_, body=body, request_options=request_options)
+        return _response.data
+
+    def verify_whats_app_webhook(
+        self,
+        id: str,
+        *,
+        hub_mode: VerifyWhatsAppWebhookRequestHubMode,
+        hub_verify_token: str,
+        hub_challenge: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        hub_mode : VerifyWhatsAppWebhookRequestHubMode
+
+        hub_verify_token : str
+
+        hub_challenge : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Verification succeeded; echoes the challenge
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.channels.verify_whats_app_webhook(
+            id="id",
+            hub_mode="subscribe",
+            hub_verify_token="hub.verify_token",
+        )
+        """
+        _response = self._raw_client.verify_whats_app_webhook(
+            id,
+            hub_mode=hub_mode,
+            hub_verify_token=hub_verify_token,
+            hub_challenge=hub_challenge,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def receive_whats_app_message(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        hub_signature256: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        hub_signature256 : typing.Optional[str]
+            Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.channels.receive_whats_app_message(
+            id="id",
+            request={"key": "value"},
+        )
+        """
+        _response = self._raw_client.receive_whats_app_message(
+            id, request=request, hub_signature256=hub_signature256, request_options=request_options
+        )
         return _response.data
 
 
@@ -841,5 +940,119 @@ class AsyncChannelsClient:
         """
         _response = await self._raw_client.receive_twilio_message(
             id, from_=from_, body=body, request_options=request_options
+        )
+        return _response.data
+
+    async def verify_whats_app_webhook(
+        self,
+        id: str,
+        *,
+        hub_mode: VerifyWhatsAppWebhookRequestHubMode,
+        hub_verify_token: str,
+        hub_challenge: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        hub_mode : VerifyWhatsAppWebhookRequestHubMode
+
+        hub_verify_token : str
+
+        hub_challenge : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Verification succeeded; echoes the challenge
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.channels.verify_whats_app_webhook(
+                id="id",
+                hub_mode="subscribe",
+                hub_verify_token="hub.verify_token",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.verify_whats_app_webhook(
+            id,
+            hub_mode=hub_mode,
+            hub_verify_token=hub_verify_token,
+            hub_challenge=hub_challenge,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def receive_whats_app_message(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        hub_signature256: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        hub_signature256 : typing.Optional[str]
+            Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.channels.receive_whats_app_message(
+                id="id",
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.receive_whats_app_message(
+            id, request=request, hub_signature256=hub_signature256, request_options=request_options
         )
         return _response.data

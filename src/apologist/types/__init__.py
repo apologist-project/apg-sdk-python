@@ -6,6 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .agent_pause_state import AgentPauseState
     from .chat_completion_request import ChatCompletionRequest
     from .chat_completion_request_logprobs import ChatCompletionRequestLogprobs
     from .chat_completion_request_metadata import ChatCompletionRequestMetadata
@@ -21,6 +22,7 @@ if typing.TYPE_CHECKING:
     from .chat_completion_response_usage import ChatCompletionResponseUsage
     from .chat_message import ChatMessage
     from .chat_message_role import ChatMessageRole
+    from .conversation import Conversation
     from .cta_match_request import CtaMatchRequest
     from .error import Error
     from .success_response import SuccessResponse
@@ -36,6 +38,7 @@ if typing.TYPE_CHECKING:
     from .webhook_notification_ref import WebhookNotificationRef
     from .webhook_payload import WebhookPayload
 _dynamic_imports: typing.Dict[str, str] = {
+    "AgentPauseState": ".agent_pause_state",
     "ChatCompletionRequest": ".chat_completion_request",
     "ChatCompletionRequestLogprobs": ".chat_completion_request_logprobs",
     "ChatCompletionRequestMetadata": ".chat_completion_request_metadata",
@@ -51,6 +54,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatCompletionResponseUsage": ".chat_completion_response_usage",
     "ChatMessage": ".chat_message",
     "ChatMessageRole": ".chat_message_role",
+    "Conversation": ".conversation",
     "CtaMatchRequest": ".cta_match_request",
     "Error": ".error",
     "SuccessResponse": ".success_response",
@@ -90,6 +94,7 @@ def __dir__():
 
 
 __all__ = [
+    "AgentPauseState",
     "ChatCompletionRequest",
     "ChatCompletionRequestLogprobs",
     "ChatCompletionRequestMetadata",
@@ -105,6 +110,7 @@ __all__ = [
     "ChatCompletionResponseUsage",
     "ChatMessage",
     "ChatMessageRole",
+    "Conversation",
     "CtaMatchRequest",
     "Error",
     "SuccessResponse",

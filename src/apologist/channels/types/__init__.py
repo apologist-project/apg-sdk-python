@@ -9,10 +9,12 @@ if typing.TYPE_CHECKING:
     from .get_discord_channel_status_response import GetDiscordChannelStatusResponse
     from .get_line_channel_status_response import GetLineChannelStatusResponse
     from .verify_facebook_webhook_request_hub_mode import VerifyFacebookWebhookRequestHubMode
+    from .verify_whats_app_webhook_request_hub_mode import VerifyWhatsAppWebhookRequestHubMode
 _dynamic_imports: typing.Dict[str, str] = {
     "GetDiscordChannelStatusResponse": ".get_discord_channel_status_response",
     "GetLineChannelStatusResponse": ".get_line_channel_status_response",
     "VerifyFacebookWebhookRequestHubMode": ".verify_facebook_webhook_request_hub_mode",
+    "VerifyWhatsAppWebhookRequestHubMode": ".verify_whats_app_webhook_request_hub_mode",
 }
 
 
@@ -37,4 +39,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetDiscordChannelStatusResponse", "GetLineChannelStatusResponse", "VerifyFacebookWebhookRequestHubMode"]
+__all__ = [
+    "GetDiscordChannelStatusResponse",
+    "GetLineChannelStatusResponse",
+    "VerifyFacebookWebhookRequestHubMode",
+    "VerifyWhatsAppWebhookRequestHubMode",
+]
