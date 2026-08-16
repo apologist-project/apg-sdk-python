@@ -6,17 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        GetDiscordChannelStatusResponse,
-        GetLineChannelStatusResponse,
-        VerifyFacebookWebhookRequestHubMode,
-        VerifyWhatsAppWebhookRequestHubMode,
-    )
+    from .get_conversation_response import GetConversationResponse
+    from .list_conversations_response import ListConversationsResponse
+    from .pause_conversation_response import PauseConversationResponse
+    from .resume_conversation_response import ResumeConversationResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "GetDiscordChannelStatusResponse": ".types",
-    "GetLineChannelStatusResponse": ".types",
-    "VerifyFacebookWebhookRequestHubMode": ".types",
-    "VerifyWhatsAppWebhookRequestHubMode": ".types",
+    "GetConversationResponse": ".get_conversation_response",
+    "ListConversationsResponse": ".list_conversations_response",
+    "PauseConversationResponse": ".pause_conversation_response",
+    "ResumeConversationResponse": ".resume_conversation_response",
 }
 
 
@@ -42,8 +40,8 @@ def __dir__():
 
 
 __all__ = [
-    "GetDiscordChannelStatusResponse",
-    "GetLineChannelStatusResponse",
-    "VerifyFacebookWebhookRequestHubMode",
-    "VerifyWhatsAppWebhookRequestHubMode",
+    "GetConversationResponse",
+    "ListConversationsResponse",
+    "PauseConversationResponse",
+    "ResumeConversationResponse",
 ]

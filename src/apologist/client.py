@@ -10,9 +10,11 @@ from .core.logging import LogConfig, Logger
 from .environment import ApologistAgentClientEnvironment
 
 if typing.TYPE_CHECKING:
+    from .agent.client import AgentClient, AsyncAgentClient
     from .benchmarks.client import AsyncBenchmarksClient, BenchmarksClient
     from .channels.client import AsyncChannelsClient, ChannelsClient
     from .chat.client import AsyncChatClient, ChatClient
+    from .conversations.client import AsyncConversationsClient, ConversationsClient
     from .corpus.client import AsyncCorpusClient, CorpusClient
     from .ct_as.client import AsyncCtAsClient, CtAsClient
     from .evaluators.client import AsyncEvaluatorsClient, EvaluatorsClient
@@ -122,6 +124,8 @@ class ApologistAgentClient:
         self._ct_as: typing.Optional[CtAsClient] = None
         self._users: typing.Optional[UsersClient] = None
         self._benchmarks: typing.Optional[BenchmarksClient] = None
+        self._agent: typing.Optional[AgentClient] = None
+        self._conversations: typing.Optional[ConversationsClient] = None
         self._channels: typing.Optional[ChannelsClient] = None
         self._shares: typing.Optional[SharesClient] = None
 
@@ -172,6 +176,22 @@ class ApologistAgentClient:
 
             self._benchmarks = BenchmarksClient(client_wrapper=self._client_wrapper)
         return self._benchmarks
+
+    @property
+    def agent(self):
+        if self._agent is None:
+            from .agent.client import AgentClient  # noqa: E402
+
+            self._agent = AgentClient(client_wrapper=self._client_wrapper)
+        return self._agent
+
+    @property
+    def conversations(self):
+        if self._conversations is None:
+            from .conversations.client import ConversationsClient  # noqa: E402
+
+            self._conversations = ConversationsClient(client_wrapper=self._client_wrapper)
+        return self._conversations
 
     @property
     def channels(self):
@@ -308,6 +328,8 @@ class AsyncApologistAgentClient:
         self._ct_as: typing.Optional[AsyncCtAsClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
         self._benchmarks: typing.Optional[AsyncBenchmarksClient] = None
+        self._agent: typing.Optional[AsyncAgentClient] = None
+        self._conversations: typing.Optional[AsyncConversationsClient] = None
         self._channels: typing.Optional[AsyncChannelsClient] = None
         self._shares: typing.Optional[AsyncSharesClient] = None
 
@@ -358,6 +380,22 @@ class AsyncApologistAgentClient:
 
             self._benchmarks = AsyncBenchmarksClient(client_wrapper=self._client_wrapper)
         return self._benchmarks
+
+    @property
+    def agent(self):
+        if self._agent is None:
+            from .agent.client import AsyncAgentClient  # noqa: E402
+
+            self._agent = AsyncAgentClient(client_wrapper=self._client_wrapper)
+        return self._agent
+
+    @property
+    def conversations(self):
+        if self._conversations is None:
+            from .conversations.client import AsyncConversationsClient  # noqa: E402
+
+            self._conversations = AsyncConversationsClient(client_wrapper=self._client_wrapper)
+        return self._conversations
 
     @property
     def channels(self):

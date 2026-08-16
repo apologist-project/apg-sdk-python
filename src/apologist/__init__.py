@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AgentPauseState,
         ChatCompletionRequest,
         ChatCompletionRequestLogprobs,
         ChatCompletionRequestMetadata,
@@ -22,6 +23,7 @@ if typing.TYPE_CHECKING:
         ChatCompletionResponseUsage,
         ChatMessage,
         ChatMessageRole,
+        Conversation,
         CtaMatchRequest,
         Error,
         SuccessResponse,
@@ -46,8 +48,9 @@ if typing.TYPE_CHECKING:
         UnauthorizedError,
         UnprocessableEntityError,
     )
-    from . import benchmarks, channels, chat, corpus, ct_as, evaluators, shares, users
+    from . import agent, benchmarks, channels, chat, conversations, corpus, ct_as, evaluators, shares, users
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .agent import PauseAgentResponse, ResumeAgentResponse
     from .benchmarks import (
         BenchmarkRunRequestContent,
         BenchmarkRunRequestReasoningEffort,
@@ -59,9 +62,16 @@ if typing.TYPE_CHECKING:
         GetDiscordChannelStatusResponse,
         GetLineChannelStatusResponse,
         VerifyFacebookWebhookRequestHubMode,
+        VerifyWhatsAppWebhookRequestHubMode,
     )
     from .chat import GetChatCompletionResponse, ListChatCompletionsResponse
     from .client import ApologistAgentClient, AsyncApologistAgentClient
+    from .conversations import (
+        GetConversationResponse,
+        ListConversationsResponse,
+        PauseConversationResponse,
+        ResumeConversationResponse,
+    )
     from .corpus import CorpusSearchRequestFilters, SearchCorpusResponse
     from .ct_as import MatchCtasResponse
     from .environment import ApologistAgentClientEnvironment
@@ -83,6 +93,7 @@ if typing.TYPE_CHECKING:
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
+    "AgentPauseState": ".types",
     "ApologistAgentClient": ".client",
     "ApologistAgentClientEnvironment": ".environment",
     "AsyncApologistAgentClient": ".client",
@@ -105,6 +116,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatCompletionResponseUsage": ".types",
     "ChatMessage": ".types",
     "ChatMessageRole": ".types",
+    "Conversation": ".types",
     "CorpusSearchRequestFilters": ".corpus",
     "CtaMatchRequest": ".types",
     "DefaultAioHttpClient": "._default_clients",
@@ -117,6 +129,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForbiddenError": ".errors",
     "GetBenchmarkRunResponse": ".benchmarks",
     "GetChatCompletionResponse": ".chat",
+    "GetConversationResponse": ".conversations",
     "GetDiscordChannelStatusResponse": ".channels",
     "GetEvaluationResponse": ".evaluators",
     "GetLineChannelStatusResponse": ".channels",
@@ -125,11 +138,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InternalServerError": ".errors",
     "ListBenchmarkRunsResponse": ".benchmarks",
     "ListChatCompletionsResponse": ".chat",
+    "ListConversationsResponse": ".conversations",
     "ListEvaluationsResponse": ".evaluators",
     "ListUserFlagsResponse": ".users",
     "ListUsersResponse": ".users",
     "MatchCtasResponse": ".ct_as",
     "NotFoundError": ".errors",
+    "PauseAgentResponse": ".agent",
+    "PauseConversationResponse": ".conversations",
+    "ResumeAgentResponse": ".agent",
+    "ResumeConversationResponse": ".conversations",
     "SearchCorpusResponse": ".corpus",
     "ServiceUnavailableError": ".errors",
     "SuccessResponse": ".types",
@@ -141,6 +159,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserFlag": ".types",
     "UserUpdateRequestTagsItem": ".users",
     "VerifyFacebookWebhookRequestHubMode": ".channels",
+    "VerifyWhatsAppWebhookRequestHubMode": ".channels",
     "WebhookAgentRef": ".types",
     "WebhookCta": ".types",
     "WebhookEvaluation": ".types",
@@ -150,9 +169,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookNotificationRef": ".types",
     "WebhookPayload": ".types",
     "__version__": ".version",
+    "agent": ".agent",
     "benchmarks": ".benchmarks",
     "channels": ".channels",
     "chat": ".chat",
+    "conversations": ".conversations",
     "corpus": ".corpus",
     "ct_as": ".ct_as",
     "evaluators": ".evaluators",
@@ -183,6 +204,7 @@ def __dir__():
 
 
 __all__ = [
+    "AgentPauseState",
     "ApologistAgentClient",
     "ApologistAgentClientEnvironment",
     "AsyncApologistAgentClient",
@@ -205,6 +227,7 @@ __all__ = [
     "ChatCompletionResponseUsage",
     "ChatMessage",
     "ChatMessageRole",
+    "Conversation",
     "CorpusSearchRequestFilters",
     "CtaMatchRequest",
     "DefaultAioHttpClient",
@@ -217,6 +240,7 @@ __all__ = [
     "ForbiddenError",
     "GetBenchmarkRunResponse",
     "GetChatCompletionResponse",
+    "GetConversationResponse",
     "GetDiscordChannelStatusResponse",
     "GetEvaluationResponse",
     "GetLineChannelStatusResponse",
@@ -225,11 +249,16 @@ __all__ = [
     "InternalServerError",
     "ListBenchmarkRunsResponse",
     "ListChatCompletionsResponse",
+    "ListConversationsResponse",
     "ListEvaluationsResponse",
     "ListUserFlagsResponse",
     "ListUsersResponse",
     "MatchCtasResponse",
     "NotFoundError",
+    "PauseAgentResponse",
+    "PauseConversationResponse",
+    "ResumeAgentResponse",
+    "ResumeConversationResponse",
     "SearchCorpusResponse",
     "ServiceUnavailableError",
     "SuccessResponse",
@@ -241,6 +270,7 @@ __all__ = [
     "UserFlag",
     "UserUpdateRequestTagsItem",
     "VerifyFacebookWebhookRequestHubMode",
+    "VerifyWhatsAppWebhookRequestHubMode",
     "WebhookAgentRef",
     "WebhookCta",
     "WebhookEvaluation",
@@ -250,9 +280,11 @@ __all__ = [
     "WebhookNotificationRef",
     "WebhookPayload",
     "__version__",
+    "agent",
     "benchmarks",
     "channels",
     "chat",
+    "conversations",
     "corpus",
     "ct_as",
     "evaluators",
