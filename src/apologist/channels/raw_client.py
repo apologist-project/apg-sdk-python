@@ -16,6 +16,7 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.unauthorized_error import UnauthorizedError
+from .types.get_chatwoot_channel_status_response import GetChatwootChannelStatusResponse
 from .types.get_discord_channel_status_response import GetDiscordChannelStatusResponse
 from .types.get_line_channel_status_response import GetLineChannelStatusResponse
 from .types.verify_facebook_webhook_request_hub_mode import VerifyFacebookWebhookRequestHubMode
@@ -29,6 +30,149 @@ OMIT = typing.cast(typing.Any, ...)
 class RawChannelsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def get_chatwoot_channel_status(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetChatwootChannelStatusResponse]:
+        """
+        Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetChatwootChannelStatusResponse]
+            Channel status
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"channels/{encode_path_param(id)}/chatwoot",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetChatwootChannelStatusResponse,
+                    parse_obj_as(
+                        type_=GetChatwootChannelStatusResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def receive_chatwoot_webhook(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        chatwoot_signature: typing.Optional[str] = None,
+        chatwoot_timestamp: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        chatwoot_signature : typing.Optional[str]
+            `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
+
+        chatwoot_timestamp : typing.Optional[str]
+            Unix timestamp used in the HMAC payload.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"channels/{encode_path_param(id)}/chatwoot",
+            method="POST",
+            json=request,
+            headers={
+                "content-type": "application/json",
+                "X-Chatwoot-Signature": str(chatwoot_signature) if chatwoot_signature is not None else None,
+                "X-Chatwoot-Timestamp": str(chatwoot_timestamp) if chatwoot_timestamp is not None else None,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_discord_channel_status(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -809,6 +953,149 @@ class RawChannelsClient:
 class AsyncRawChannelsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def get_chatwoot_channel_status(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetChatwootChannelStatusResponse]:
+        """
+        Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetChatwootChannelStatusResponse]
+            Channel status
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"channels/{encode_path_param(id)}/chatwoot",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetChatwootChannelStatusResponse,
+                    parse_obj_as(
+                        type_=GetChatwootChannelStatusResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def receive_chatwoot_webhook(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        chatwoot_signature: typing.Optional[str] = None,
+        chatwoot_timestamp: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        chatwoot_signature : typing.Optional[str]
+            `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
+
+        chatwoot_timestamp : typing.Optional[str]
+            Unix timestamp used in the HMAC payload.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"channels/{encode_path_param(id)}/chatwoot",
+            method="POST",
+            json=request,
+            headers={
+                "content-type": "application/json",
+                "X-Chatwoot-Signature": str(chatwoot_signature) if chatwoot_signature is not None else None,
+                "X-Chatwoot-Timestamp": str(chatwoot_timestamp) if chatwoot_timestamp is not None else None,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_discord_channel_status(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None

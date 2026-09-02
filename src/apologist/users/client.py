@@ -5,9 +5,11 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawUsersClient, RawUsersClient
+from .types.anonymize_user_response import AnonymizeUserResponse
 from .types.get_user_response import GetUserResponse
 from .types.list_user_flags_response import ListUserFlagsResponse
 from .types.list_users_response import ListUsersResponse
+from .types.scrub_user_response import ScrubUserResponse
 from .types.update_user_response import UpdateUserResponse
 from .types.user_update_request_tags_item import UserUpdateRequestTagsItem
 
@@ -208,6 +210,70 @@ class UsersClient:
         _response = self._raw_client.update_user(
             user_id, external_id=external_id, tags=tags, responder_id=responder_id, request_options=request_options
         )
+        return _response.data
+
+    def scrub_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ScrubUserResponse:
+        """
+        Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ScrubUserResponse
+            Scrub progress for the user
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.users.scrub_user(
+            user_id="user_id",
+        )
+        """
+        _response = self._raw_client.scrub_user(user_id, request_options=request_options)
+        return _response.data
+
+    def anonymize_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AnonymizeUserResponse:
+        """
+        Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AnonymizeUserResponse
+            Anonymize progress for the user
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.users.anonymize_user(
+            user_id="user_id",
+        )
+        """
+        _response = self._raw_client.anonymize_user(user_id, request_options=request_options)
         return _response.data
 
 
@@ -440,4 +506,86 @@ class AsyncUsersClient:
         _response = await self._raw_client.update_user(
             user_id, external_id=external_id, tags=tags, responder_id=responder_id, request_options=request_options
         )
+        return _response.data
+
+    async def scrub_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ScrubUserResponse:
+        """
+        Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ScrubUserResponse
+            Scrub progress for the user
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.users.scrub_user(
+                user_id="user_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.scrub_user(user_id, request_options=request_options)
+        return _response.data
+
+    async def anonymize_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AnonymizeUserResponse:
+        """
+        Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AnonymizeUserResponse
+            Anonymize progress for the user
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.users.anonymize_user(
+                user_id="user_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.anonymize_user(user_id, request_options=request_options)
         return _response.data

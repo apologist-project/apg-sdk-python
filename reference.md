@@ -2129,6 +2129,152 @@ client.users.update_user(
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="src/apologist/users/client.py">scrub_user</a>(...) -> ScrubUserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.users.scrub_user(
+    user_id="user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` — The user's external id or internal id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/apologist/users/client.py">anonymize_user</a>(...) -> AnonymizeUserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.users.anonymize_user(
+    user_id="user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` — The user's external id or internal id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Benchmarks
 <details><summary><code>client.benchmarks.<a href="src/apologist/benchmarks/client.py">list_benchmark_runs</a>(...) -> ListBenchmarkRunsResponse</code></summary>
 <dl>
@@ -2985,6 +3131,179 @@ client.conversations.resume_conversation(
 </details>
 
 ## Channels
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">get_chatwoot_channel_status</a>(...) -> GetChatwootChannelStatusResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.channels.get_chatwoot_channel_status(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.channels.<a href="src/apologist/channels/client.py">receive_chatwoot_webhook</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from apologist import ApologistAgentClient
+from apologist.environment import ApologistAgentClientEnvironment
+
+client = ApologistAgentClient(
+    api_key="<value>",
+    environment=ApologistAgentClientEnvironment.DEFAULT,
+)
+
+client.channels.receive_chatwoot_webhook(
+    id="id",
+    request={
+        "key": "value"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Dict[str, typing.Any]` — Chatwoot Agent Bot webhook payload (`event` plus message or conversation fields).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chatwoot_signature:** `typing.Optional[str]` — `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chatwoot_timestamp:** `typing.Optional[str]` — Unix timestamp used in the HMAC payload.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.channels.<a href="src/apologist/channels/client.py">get_discord_channel_status</a>(...) -> GetDiscordChannelStatusResponse</code></summary>
 <dl>
 <dd>

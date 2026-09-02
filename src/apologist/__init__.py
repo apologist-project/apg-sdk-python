@@ -30,6 +30,8 @@ if typing.TYPE_CHECKING:
         TagRef,
         User,
         UserFlag,
+        UserRedactResponse,
+        UserRedactResponseMode,
         WebhookAgentRef,
         WebhookCta,
         WebhookEvaluation,
@@ -59,6 +61,7 @@ if typing.TYPE_CHECKING:
         ListBenchmarkRunsResponse,
     )
     from .channels import (
+        GetChatwootChannelStatusResponse,
         GetDiscordChannelStatusResponse,
         GetLineChannelStatusResponse,
         VerifyFacebookWebhookRequestHubMode,
@@ -85,15 +88,18 @@ if typing.TYPE_CHECKING:
     )
     from .shares import GetSharedMessagesResponse
     from .users import (
+        AnonymizeUserResponse,
         GetUserResponse,
         ListUserFlagsResponse,
         ListUsersResponse,
+        ScrubUserResponse,
         UpdateUserResponse,
         UserUpdateRequestTagsItem,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentPauseState": ".types",
+    "AnonymizeUserResponse": ".users",
     "ApologistAgentClient": ".client",
     "ApologistAgentClientEnvironment": ".environment",
     "AsyncApologistAgentClient": ".client",
@@ -129,6 +135,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForbiddenError": ".errors",
     "GetBenchmarkRunResponse": ".benchmarks",
     "GetChatCompletionResponse": ".chat",
+    "GetChatwootChannelStatusResponse": ".channels",
     "GetConversationResponse": ".conversations",
     "GetDiscordChannelStatusResponse": ".channels",
     "GetEvaluationResponse": ".evaluators",
@@ -148,6 +155,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PauseConversationResponse": ".conversations",
     "ResumeAgentResponse": ".agent",
     "ResumeConversationResponse": ".conversations",
+    "ScrubUserResponse": ".users",
     "SearchCorpusResponse": ".corpus",
     "ServiceUnavailableError": ".errors",
     "SuccessResponse": ".types",
@@ -157,6 +165,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateUserResponse": ".users",
     "User": ".types",
     "UserFlag": ".types",
+    "UserRedactResponse": ".types",
+    "UserRedactResponseMode": ".types",
     "UserUpdateRequestTagsItem": ".users",
     "VerifyFacebookWebhookRequestHubMode": ".channels",
     "VerifyWhatsAppWebhookRequestHubMode": ".channels",
@@ -205,6 +215,7 @@ def __dir__():
 
 __all__ = [
     "AgentPauseState",
+    "AnonymizeUserResponse",
     "ApologistAgentClient",
     "ApologistAgentClientEnvironment",
     "AsyncApologistAgentClient",
@@ -240,6 +251,7 @@ __all__ = [
     "ForbiddenError",
     "GetBenchmarkRunResponse",
     "GetChatCompletionResponse",
+    "GetChatwootChannelStatusResponse",
     "GetConversationResponse",
     "GetDiscordChannelStatusResponse",
     "GetEvaluationResponse",
@@ -259,6 +271,7 @@ __all__ = [
     "PauseConversationResponse",
     "ResumeAgentResponse",
     "ResumeConversationResponse",
+    "ScrubUserResponse",
     "SearchCorpusResponse",
     "ServiceUnavailableError",
     "SuccessResponse",
@@ -268,6 +281,8 @@ __all__ = [
     "UpdateUserResponse",
     "User",
     "UserFlag",
+    "UserRedactResponse",
+    "UserRedactResponseMode",
     "UserUpdateRequestTagsItem",
     "VerifyFacebookWebhookRequestHubMode",
     "VerifyWhatsAppWebhookRequestHubMode",

@@ -17,9 +17,11 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.error import Error
+from .types.anonymize_user_response import AnonymizeUserResponse
 from .types.get_user_response import GetUserResponse
 from .types.list_user_flags_response import ListUserFlagsResponse
 from .types.list_users_response import ListUsersResponse
+from .types.scrub_user_response import ScrubUserResponse
 from .types.update_user_response import UpdateUserResponse
 from .types.user_update_request_tags_item import UserUpdateRequestTagsItem
 from pydantic import ValidationError
@@ -403,6 +405,158 @@ class RawUsersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def scrub_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ScrubUserResponse]:
+        """
+        Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ScrubUserResponse]
+            Scrub progress for the user
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"users/{encode_path_param(user_id)}/scrub",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ScrubUserResponse,
+                    parse_obj_as(
+                        type_=ScrubUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def anonymize_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[AnonymizeUserResponse]:
+        """
+        Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AnonymizeUserResponse]
+            Anonymize progress for the user
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"users/{encode_path_param(user_id)}/anonymize",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AnonymizeUserResponse,
+                    parse_obj_as(
+                        type_=AnonymizeUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -755,6 +909,158 @@ class AsyncRawUsersClient:
                         Error,
                         parse_obj_as(
                             type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def scrub_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ScrubUserResponse]:
+        """
+        Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ScrubUserResponse]
+            Scrub progress for the user
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"users/{encode_path_param(user_id)}/scrub",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ScrubUserResponse,
+                    parse_obj_as(
+                        type_=ScrubUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def anonymize_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[AnonymizeUserResponse]:
+        """
+        Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        user_id : str
+            The user's external id or internal id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AnonymizeUserResponse]
+            Anonymize progress for the user
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"users/{encode_path_param(user_id)}/anonymize",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AnonymizeUserResponse,
+                    parse_obj_as(
+                        type_=AnonymizeUserResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
