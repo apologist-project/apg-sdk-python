@@ -7,16 +7,20 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AnonymizeUserResponse,
         GetUserResponse,
         ListUserFlagsResponse,
         ListUsersResponse,
+        ScrubUserResponse,
         UpdateUserResponse,
         UserUpdateRequestTagsItem,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnonymizeUserResponse": ".types",
     "GetUserResponse": ".types",
     "ListUserFlagsResponse": ".types",
     "ListUsersResponse": ".types",
+    "ScrubUserResponse": ".types",
     "UpdateUserResponse": ".types",
     "UserUpdateRequestTagsItem": ".types",
 }
@@ -44,9 +48,11 @@ def __dir__():
 
 
 __all__ = [
+    "AnonymizeUserResponse",
     "GetUserResponse",
     "ListUserFlagsResponse",
     "ListUsersResponse",
+    "ScrubUserResponse",
     "UpdateUserResponse",
     "UserUpdateRequestTagsItem",
 ]

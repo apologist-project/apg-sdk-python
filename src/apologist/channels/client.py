@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawChannelsClient, RawChannelsClient
+from .types.get_chatwoot_channel_status_response import GetChatwootChannelStatusResponse
 from .types.get_discord_channel_status_response import GetDiscordChannelStatusResponse
 from .types.get_line_channel_status_response import GetLineChannelStatusResponse
 from .types.verify_facebook_webhook_request_hub_mode import VerifyFacebookWebhookRequestHubMode
@@ -28,6 +29,92 @@ class ChannelsClient:
         RawChannelsClient
         """
         return self._raw_client
+
+    def get_chatwoot_channel_status(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetChatwootChannelStatusResponse:
+        """
+        Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetChatwootChannelStatusResponse
+            Channel status
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.channels.get_chatwoot_channel_status(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_chatwoot_channel_status(id, request_options=request_options)
+        return _response.data
+
+    def receive_chatwoot_webhook(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        chatwoot_signature: typing.Optional[str] = None,
+        chatwoot_timestamp: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        chatwoot_signature : typing.Optional[str]
+            `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
+
+        chatwoot_timestamp : typing.Optional[str]
+            Unix timestamp used in the HMAC payload.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.channels.receive_chatwoot_webhook(
+            id="id",
+            request={"key": "value"},
+        )
+        """
+        _response = self._raw_client.receive_chatwoot_webhook(
+            id,
+            request=request,
+            chatwoot_signature=chatwoot_signature,
+            chatwoot_timestamp=chatwoot_timestamp,
+            request_options=request_options,
+        )
+        return _response.data
 
     def get_discord_channel_status(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -503,6 +590,108 @@ class AsyncChannelsClient:
         AsyncRawChannelsClient
         """
         return self._raw_client
+
+    async def get_chatwoot_channel_status(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetChatwootChannelStatusResponse:
+        """
+        Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetChatwootChannelStatusResponse
+            Channel status
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.channels.get_chatwoot_channel_status(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_chatwoot_channel_status(id, request_options=request_options)
+        return _response.data
+
+    async def receive_chatwoot_webhook(
+        self,
+        id: str,
+        *,
+        request: typing.Dict[str, typing.Any],
+        chatwoot_signature: typing.Optional[str] = None,
+        chatwoot_timestamp: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+
+        Parameters
+        ----------
+        id : str
+            The channel id
+
+        request : typing.Dict[str, typing.Any]
+
+        chatwoot_signature : typing.Optional[str]
+            `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
+
+        chatwoot_timestamp : typing.Optional[str]
+            Unix timestamp used in the HMAC payload.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.channels.receive_chatwoot_webhook(
+                id="id",
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.receive_chatwoot_webhook(
+            id,
+            request=request,
+            chatwoot_signature=chatwoot_signature,
+            chatwoot_timestamp=chatwoot_timestamp,
+            request_options=request_options,
+        )
+        return _response.data
 
     async def get_discord_channel_status(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None

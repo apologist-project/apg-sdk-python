@@ -7,12 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        GetChatwootChannelStatusResponse,
         GetDiscordChannelStatusResponse,
         GetLineChannelStatusResponse,
         VerifyFacebookWebhookRequestHubMode,
         VerifyWhatsAppWebhookRequestHubMode,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "GetChatwootChannelStatusResponse": ".types",
     "GetDiscordChannelStatusResponse": ".types",
     "GetLineChannelStatusResponse": ".types",
     "VerifyFacebookWebhookRequestHubMode": ".types",
@@ -42,6 +44,7 @@ def __dir__():
 
 
 __all__ = [
+    "GetChatwootChannelStatusResponse",
     "GetDiscordChannelStatusResponse",
     "GetLineChannelStatusResponse",
     "VerifyFacebookWebhookRequestHubMode",
