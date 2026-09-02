@@ -29,6 +29,8 @@ if typing.TYPE_CHECKING:
     from .tag_ref import TagRef
     from .user import User
     from .user_flag import UserFlag
+    from .user_redact_response import UserRedactResponse
+    from .user_redact_response_mode import UserRedactResponseMode
     from .webhook_agent_ref import WebhookAgentRef
     from .webhook_cta import WebhookCta
     from .webhook_evaluation import WebhookEvaluation
@@ -61,6 +63,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TagRef": ".tag_ref",
     "User": ".user",
     "UserFlag": ".user_flag",
+    "UserRedactResponse": ".user_redact_response",
+    "UserRedactResponseMode": ".user_redact_response_mode",
     "WebhookAgentRef": ".webhook_agent_ref",
     "WebhookCta": ".webhook_cta",
     "WebhookEvaluation": ".webhook_evaluation",
@@ -117,6 +121,8 @@ __all__ = [
     "TagRef",
     "User",
     "UserFlag",
+    "UserRedactResponse",
+    "UserRedactResponseMode",
     "WebhookAgentRef",
     "WebhookCta",
     "WebhookEvaluation",

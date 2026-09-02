@@ -6,15 +6,19 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .anonymize_user_response import AnonymizeUserResponse
     from .get_user_response import GetUserResponse
     from .list_user_flags_response import ListUserFlagsResponse
     from .list_users_response import ListUsersResponse
+    from .scrub_user_response import ScrubUserResponse
     from .update_user_response import UpdateUserResponse
     from .user_update_request_tags_item import UserUpdateRequestTagsItem
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnonymizeUserResponse": ".anonymize_user_response",
     "GetUserResponse": ".get_user_response",
     "ListUserFlagsResponse": ".list_user_flags_response",
     "ListUsersResponse": ".list_users_response",
+    "ScrubUserResponse": ".scrub_user_response",
     "UpdateUserResponse": ".update_user_response",
     "UserUpdateRequestTagsItem": ".user_update_request_tags_item",
 }
@@ -42,9 +46,11 @@ def __dir__():
 
 
 __all__ = [
+    "AnonymizeUserResponse",
     "GetUserResponse",
     "ListUserFlagsResponse",
     "ListUsersResponse",
+    "ScrubUserResponse",
     "UpdateUserResponse",
     "UserUpdateRequestTagsItem",
 ]
