@@ -13,6 +13,11 @@ class UserFlag(UniversalBaseModel):
 
     id: typing.Optional[int] = None
     name: typing.Optional[str] = None
+    key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional channel user-attribute key. When null, Agent derives a lowercase snake_case key from name.
+    """
+
     user_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Upstream owning user id when present (mirrored from Ignite).

@@ -3,7 +3,7 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .chat_completion_request_response_format_json_schema import ChatCompletionRequestResponseFormatJsonSchema
 from .chat_completion_request_response_format_type import ChatCompletionRequestResponseFormatType
 

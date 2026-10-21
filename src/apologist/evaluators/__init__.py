@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         EvaluateContentResponse,
         EvaluatorRequestContent,
+        EvaluatorRequestContentOneItem,
         EvaluatorRequestReasoningEffort,
         EvaluatorRequestVerbosity,
         GetEvaluationResponse,
@@ -17,6 +18,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "EvaluateContentResponse": ".types",
     "EvaluatorRequestContent": ".types",
+    "EvaluatorRequestContentOneItem": ".types",
     "EvaluatorRequestReasoningEffort": ".types",
     "EvaluatorRequestVerbosity": ".types",
     "GetEvaluationResponse": ".types",
@@ -48,6 +50,7 @@ def __dir__():
 __all__ = [
     "EvaluateContentResponse",
     "EvaluatorRequestContent",
+    "EvaluatorRequestContentOneItem",
     "EvaluatorRequestReasoningEffort",
     "EvaluatorRequestVerbosity",
     "GetEvaluationResponse",

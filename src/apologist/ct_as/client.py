@@ -4,7 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.cta_match_request import CtaMatchRequest
+from ..types.chat_message import ChatMessage
 from ..types.success_response import SuccessResponse
 from .raw_client import AsyncRawCtAsClient, RawCtAsClient
 from .types.match_ctas_response import MatchCtasResponse
@@ -29,14 +29,44 @@ class CtAsClient:
         return self._raw_client
 
     def match_ctas(
-        self, *, request: CtaMatchRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        conversation: typing.Optional[str] = OMIT,
+        client: typing.Optional[str] = OMIT,
+        device: typing.Optional[str] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        limit: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        session: typing.Optional[str] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MatchCtasResponse:
         """
         Finds matching CTAs based on conversation context, user, session, device, or messages
 
         Parameters
         ----------
-        request : CtaMatchRequest
+        conversation : typing.Optional[str]
+
+        client : typing.Optional[str]
+
+        device : typing.Optional[str]
+
+        language : typing.Optional[str]
+            ISO language code, or `auto` to detect from the prompt.
+
+        limit : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format.
+
+        session : typing.Optional[str]
+
+        user : typing.Optional[str]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Flat string key/value pairs substituted into `{key}` placeholders in evaluator prompts run during CTA matching. Not persisted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,11 +83,20 @@ class CtAsClient:
         client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
-        client.ct_as.match_ctas(
-            request={"key": "value"},
-        )
+        client.ct_as.match_ctas()
         """
-        _response = self._raw_client.match_ctas(request=request, request_options=request_options)
+        _response = self._raw_client.match_ctas(
+            conversation=conversation,
+            client=client,
+            device=device,
+            language=language,
+            limit=limit,
+            messages=messages,
+            session=session,
+            user=user,
+            variables=variables,
+            request_options=request_options,
+        )
         return _response.data
 
     def log_cta_click(
@@ -113,14 +152,44 @@ class AsyncCtAsClient:
         return self._raw_client
 
     async def match_ctas(
-        self, *, request: CtaMatchRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        conversation: typing.Optional[str] = OMIT,
+        client: typing.Optional[str] = OMIT,
+        device: typing.Optional[str] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        limit: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        session: typing.Optional[str] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MatchCtasResponse:
         """
         Finds matching CTAs based on conversation context, user, session, device, or messages
 
         Parameters
         ----------
-        request : CtaMatchRequest
+        conversation : typing.Optional[str]
+
+        client : typing.Optional[str]
+
+        device : typing.Optional[str]
+
+        language : typing.Optional[str]
+            ISO language code, or `auto` to detect from the prompt.
+
+        limit : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format.
+
+        session : typing.Optional[str]
+
+        user : typing.Optional[str]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Flat string key/value pairs substituted into `{key}` placeholders in evaluator prompts run during CTA matching. Not persisted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -142,14 +211,23 @@ class AsyncCtAsClient:
 
 
         async def main() -> None:
-            await client.ct_as.match_ctas(
-                request={"key": "value"},
-            )
+            await client.ct_as.match_ctas()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.match_ctas(request=request, request_options=request_options)
+        _response = await self._raw_client.match_ctas(
+            conversation=conversation,
+            client=client,
+            device=device,
+            language=language,
+            limit=limit,
+            messages=messages,
+            session=session,
+            user=user,
+            variables=variables,
+            request_options=request_options,
+        )
         return _response.data
 
     async def log_cta_click(

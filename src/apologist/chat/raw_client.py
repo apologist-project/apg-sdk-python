@@ -16,12 +16,20 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.chat_completion_request import ChatCompletionRequest
 from ..types.chat_completion_response import ChatCompletionResponse
+from ..types.chat_message import ChatMessage
 from ..types.error import Error
 from ..types.success_response import SuccessResponse
+from .types.anonymize_completion_response import AnonymizeCompletionResponse
+from .types.chat_completion_request_logprobs import ChatCompletionRequestLogprobs
+from .types.chat_completion_request_metadata import ChatCompletionRequestMetadata
+from .types.chat_completion_request_reasoning_effort import ChatCompletionRequestReasoningEffort
+from .types.chat_completion_request_response_format import ChatCompletionRequestResponseFormat
+from .types.chat_completion_request_tool_choice import ChatCompletionRequestToolChoice
+from .types.chat_completion_request_verbosity import ChatCompletionRequestVerbosity
 from .types.get_chat_completion_response import GetChatCompletionResponse
 from .types.list_chat_completions_response import ListChatCompletionsResponse
+from .types.scrub_completion_response import ScrubCompletionResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -53,6 +61,9 @@ class RawChatClient:
         user_id: typing.Optional[str] = None,
         min_timestamp: typing.Optional[str] = None,
         max_timestamp: typing.Optional[str] = None,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListChatCompletionsResponse]:
         """
@@ -97,6 +108,15 @@ class RawChatClient:
 
         max_timestamp : typing.Optional[str]
 
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -127,6 +147,11 @@ class RawChatClient:
                 "user_id": user_id,
                 "min_timestamp": min_timestamp,
                 "max_timestamp": max_timestamp,
+            },
+            headers={
+                "traceparent": str(traceparent) if traceparent is not None else None,
+                "tracestate": str(tracestate) if tracestate is not None else None,
+                "baggage": str(baggage) if baggage is not None else None,
             },
             request_options=request_options,
         )
@@ -172,14 +197,120 @@ class RawChatClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_chat_completion(
-        self, *, request: ChatCompletionRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
+        audio: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        frequency_penalty: typing.Optional[float] = OMIT,
+        logit_bias: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        logprobs: typing.Optional[ChatCompletionRequestLogprobs] = OMIT,
+        top_logprobs: typing.Optional[int] = OMIT,
+        max_completion_tokens: typing.Optional[int] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        metadata: typing.Optional[ChatCompletionRequestMetadata] = OMIT,
+        modalities: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        model: typing.Optional[str] = OMIT,
+        n: typing.Optional[int] = OMIT,
+        parallel_tool_calls: typing.Optional[bool] = OMIT,
+        prediction: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        presence_penalty: typing.Optional[float] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        reasoning_effort: typing.Optional[ChatCompletionRequestReasoningEffort] = OMIT,
+        verbosity: typing.Optional[ChatCompletionRequestVerbosity] = OMIT,
+        response_format: typing.Optional[ChatCompletionRequestResponseFormat] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        service_tier: typing.Optional[str] = OMIT,
+        stop: typing.Optional[str] = OMIT,
+        store: typing.Optional[bool] = OMIT,
+        stream: typing.Optional[bool] = OMIT,
+        stream_options: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        temperature: typing.Optional[float] = OMIT,
+        top_p: typing.Optional[float] = OMIT,
+        tools: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        tool_choice: typing.Optional[ChatCompletionRequestToolChoice] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ChatCompletionResponse]:
         """
         Creates a chat completion using the agent's configured model. Supports both streaming and non-streaming responses.
 
         Parameters
         ----------
-        request : ChatCompletionRequest
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
+        audio : typing.Optional[typing.Dict[str, typing.Any]]
+
+        frequency_penalty : typing.Optional[float]
+
+        logit_bias : typing.Optional[typing.Dict[str, typing.Any]]
+
+        logprobs : typing.Optional[ChatCompletionRequestLogprobs]
+
+        top_logprobs : typing.Optional[int]
+
+        max_completion_tokens : typing.Optional[int]
+            Output-token cap for this request. An API key may set this above the agent's Max Output Tokens. The value cannot exceed the model's maximum. Requests without an API key keep the agent's Max Output Tokens.
+
+        max_tokens : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format. Required when `prompt` is omitted.
+
+        metadata : typing.Optional[ChatCompletionRequestMetadata]
+
+        modalities : typing.Optional[typing.Sequence[typing.Any]]
+
+        model : typing.Optional[str]
+
+        n : typing.Optional[int]
+
+        parallel_tool_calls : typing.Optional[bool]
+
+        prediction : typing.Optional[typing.Dict[str, typing.Any]]
+
+        presence_penalty : typing.Optional[float]
+
+        prompt : typing.Optional[str]
+            User text to complete. Required when `messages` is omitted.
+
+        reasoning_effort : typing.Optional[ChatCompletionRequestReasoningEffort]
+
+        verbosity : typing.Optional[ChatCompletionRequestVerbosity]
+
+        response_format : typing.Optional[ChatCompletionRequestResponseFormat]
+
+        seed : typing.Optional[int]
+
+        service_tier : typing.Optional[str]
+
+        stop : typing.Optional[str]
+
+        store : typing.Optional[bool]
+
+        stream : typing.Optional[bool]
+
+        stream_options : typing.Optional[typing.Dict[str, typing.Any]]
+
+        temperature : typing.Optional[float]
+
+        top_p : typing.Optional[float]
+
+        tools : typing.Optional[typing.Sequence[typing.Any]]
+            OpenAI-compatible function tool definitions. Passed through to the model as declaration-only tools (the client executes them and returns role=tool messages).
+
+        tool_choice : typing.Optional[ChatCompletionRequestToolChoice]
+
+        user : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,9 +323,56 @@ class RawChatClient:
         _response = self._client_wrapper.httpx_client.request(
             "chat/completions",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ChatCompletionRequest, direction="write"
-            ),
+            json={
+                "audio": audio,
+                "frequency_penalty": frequency_penalty,
+                "logit_bias": logit_bias,
+                "logprobs": convert_and_respect_annotation_metadata(
+                    object_=logprobs, annotation=typing.Optional[ChatCompletionRequestLogprobs], direction="write"
+                ),
+                "top_logprobs": top_logprobs,
+                "max_completion_tokens": max_completion_tokens,
+                "max_tokens": max_tokens,
+                "messages": convert_and_respect_annotation_metadata(
+                    object_=messages, annotation=typing.Optional[typing.Sequence[ChatMessage]], direction="write"
+                ),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=typing.Optional[ChatCompletionRequestMetadata], direction="write"
+                ),
+                "modalities": modalities,
+                "model": model,
+                "n": n,
+                "parallel_tool_calls": parallel_tool_calls,
+                "prediction": prediction,
+                "presence_penalty": presence_penalty,
+                "prompt": prompt,
+                "reasoning_effort": reasoning_effort,
+                "verbosity": verbosity,
+                "response_format": convert_and_respect_annotation_metadata(
+                    object_=response_format,
+                    annotation=typing.Optional[ChatCompletionRequestResponseFormat],
+                    direction="write",
+                ),
+                "seed": seed,
+                "service_tier": service_tier,
+                "stop": stop,
+                "store": store,
+                "stream": stream,
+                "stream_options": stream_options,
+                "temperature": temperature,
+                "top_p": top_p,
+                "tools": tools,
+                "tool_choice": convert_and_respect_annotation_metadata(
+                    object_=tool_choice, annotation=typing.Optional[ChatCompletionRequestToolChoice], direction="write"
+                ),
+                "user": user,
+            },
+            headers={
+                "content-type": "application/json",
+                "traceparent": str(traceparent) if traceparent is not None else None,
+                "tracestate": str(tracestate) if tracestate is not None else None,
+                "baggage": str(baggage) if baggage is not None else None,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -602,6 +780,158 @@ class RawChatClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def scrub_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ScrubCompletionResponse]:
+        """
+        Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ScrubCompletionResponse]
+            Scrub progress for the chat completion
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"chat/completions/{encode_path_param(id)}/scrub",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ScrubCompletionResponse,
+                    parse_obj_as(
+                        type_=ScrubCompletionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def anonymize_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[AnonymizeCompletionResponse]:
+        """
+        Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AnonymizeCompletionResponse]
+            Anonymize progress for the chat completion
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"chat/completions/{encode_path_param(id)}/anonymize",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AnonymizeCompletionResponse,
+                    parse_obj_as(
+                        type_=AnonymizeCompletionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_chat_completion(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetChatCompletionResponse]:
@@ -704,6 +1034,9 @@ class AsyncRawChatClient:
         user_id: typing.Optional[str] = None,
         min_timestamp: typing.Optional[str] = None,
         max_timestamp: typing.Optional[str] = None,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListChatCompletionsResponse]:
         """
@@ -748,6 +1081,15 @@ class AsyncRawChatClient:
 
         max_timestamp : typing.Optional[str]
 
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -778,6 +1120,11 @@ class AsyncRawChatClient:
                 "user_id": user_id,
                 "min_timestamp": min_timestamp,
                 "max_timestamp": max_timestamp,
+            },
+            headers={
+                "traceparent": str(traceparent) if traceparent is not None else None,
+                "tracestate": str(tracestate) if tracestate is not None else None,
+                "baggage": str(baggage) if baggage is not None else None,
             },
             request_options=request_options,
         )
@@ -823,14 +1170,120 @@ class AsyncRawChatClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_chat_completion(
-        self, *, request: ChatCompletionRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
+        audio: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        frequency_penalty: typing.Optional[float] = OMIT,
+        logit_bias: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        logprobs: typing.Optional[ChatCompletionRequestLogprobs] = OMIT,
+        top_logprobs: typing.Optional[int] = OMIT,
+        max_completion_tokens: typing.Optional[int] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        metadata: typing.Optional[ChatCompletionRequestMetadata] = OMIT,
+        modalities: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        model: typing.Optional[str] = OMIT,
+        n: typing.Optional[int] = OMIT,
+        parallel_tool_calls: typing.Optional[bool] = OMIT,
+        prediction: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        presence_penalty: typing.Optional[float] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        reasoning_effort: typing.Optional[ChatCompletionRequestReasoningEffort] = OMIT,
+        verbosity: typing.Optional[ChatCompletionRequestVerbosity] = OMIT,
+        response_format: typing.Optional[ChatCompletionRequestResponseFormat] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        service_tier: typing.Optional[str] = OMIT,
+        stop: typing.Optional[str] = OMIT,
+        store: typing.Optional[bool] = OMIT,
+        stream: typing.Optional[bool] = OMIT,
+        stream_options: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        temperature: typing.Optional[float] = OMIT,
+        top_p: typing.Optional[float] = OMIT,
+        tools: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        tool_choice: typing.Optional[ChatCompletionRequestToolChoice] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ChatCompletionResponse]:
         """
         Creates a chat completion using the agent's configured model. Supports both streaming and non-streaming responses.
 
         Parameters
         ----------
-        request : ChatCompletionRequest
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
+        audio : typing.Optional[typing.Dict[str, typing.Any]]
+
+        frequency_penalty : typing.Optional[float]
+
+        logit_bias : typing.Optional[typing.Dict[str, typing.Any]]
+
+        logprobs : typing.Optional[ChatCompletionRequestLogprobs]
+
+        top_logprobs : typing.Optional[int]
+
+        max_completion_tokens : typing.Optional[int]
+            Output-token cap for this request. An API key may set this above the agent's Max Output Tokens. The value cannot exceed the model's maximum. Requests without an API key keep the agent's Max Output Tokens.
+
+        max_tokens : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format. Required when `prompt` is omitted.
+
+        metadata : typing.Optional[ChatCompletionRequestMetadata]
+
+        modalities : typing.Optional[typing.Sequence[typing.Any]]
+
+        model : typing.Optional[str]
+
+        n : typing.Optional[int]
+
+        parallel_tool_calls : typing.Optional[bool]
+
+        prediction : typing.Optional[typing.Dict[str, typing.Any]]
+
+        presence_penalty : typing.Optional[float]
+
+        prompt : typing.Optional[str]
+            User text to complete. Required when `messages` is omitted.
+
+        reasoning_effort : typing.Optional[ChatCompletionRequestReasoningEffort]
+
+        verbosity : typing.Optional[ChatCompletionRequestVerbosity]
+
+        response_format : typing.Optional[ChatCompletionRequestResponseFormat]
+
+        seed : typing.Optional[int]
+
+        service_tier : typing.Optional[str]
+
+        stop : typing.Optional[str]
+
+        store : typing.Optional[bool]
+
+        stream : typing.Optional[bool]
+
+        stream_options : typing.Optional[typing.Dict[str, typing.Any]]
+
+        temperature : typing.Optional[float]
+
+        top_p : typing.Optional[float]
+
+        tools : typing.Optional[typing.Sequence[typing.Any]]
+            OpenAI-compatible function tool definitions. Passed through to the model as declaration-only tools (the client executes them and returns role=tool messages).
+
+        tool_choice : typing.Optional[ChatCompletionRequestToolChoice]
+
+        user : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -843,9 +1296,56 @@ class AsyncRawChatClient:
         _response = await self._client_wrapper.httpx_client.request(
             "chat/completions",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ChatCompletionRequest, direction="write"
-            ),
+            json={
+                "audio": audio,
+                "frequency_penalty": frequency_penalty,
+                "logit_bias": logit_bias,
+                "logprobs": convert_and_respect_annotation_metadata(
+                    object_=logprobs, annotation=typing.Optional[ChatCompletionRequestLogprobs], direction="write"
+                ),
+                "top_logprobs": top_logprobs,
+                "max_completion_tokens": max_completion_tokens,
+                "max_tokens": max_tokens,
+                "messages": convert_and_respect_annotation_metadata(
+                    object_=messages, annotation=typing.Optional[typing.Sequence[ChatMessage]], direction="write"
+                ),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=typing.Optional[ChatCompletionRequestMetadata], direction="write"
+                ),
+                "modalities": modalities,
+                "model": model,
+                "n": n,
+                "parallel_tool_calls": parallel_tool_calls,
+                "prediction": prediction,
+                "presence_penalty": presence_penalty,
+                "prompt": prompt,
+                "reasoning_effort": reasoning_effort,
+                "verbosity": verbosity,
+                "response_format": convert_and_respect_annotation_metadata(
+                    object_=response_format,
+                    annotation=typing.Optional[ChatCompletionRequestResponseFormat],
+                    direction="write",
+                ),
+                "seed": seed,
+                "service_tier": service_tier,
+                "stop": stop,
+                "store": store,
+                "stream": stream,
+                "stream_options": stream_options,
+                "temperature": temperature,
+                "top_p": top_p,
+                "tools": tools,
+                "tool_choice": convert_and_respect_annotation_metadata(
+                    object_=tool_choice, annotation=typing.Optional[ChatCompletionRequestToolChoice], direction="write"
+                ),
+                "user": user,
+            },
+            headers={
+                "content-type": "application/json",
+                "traceparent": str(traceparent) if traceparent is not None else None,
+                "tracestate": str(tracestate) if tracestate is not None else None,
+                "baggage": str(baggage) if baggage is not None else None,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1235,6 +1735,158 @@ class AsyncRawChatClient:
                 )
             if _response.status_code == 503:
                 raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def scrub_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ScrubCompletionResponse]:
+        """
+        Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ScrubCompletionResponse]
+            Scrub progress for the chat completion
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"chat/completions/{encode_path_param(id)}/scrub",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ScrubCompletionResponse,
+                    parse_obj_as(
+                        type_=ScrubCompletionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def anonymize_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[AnonymizeCompletionResponse]:
+        """
+        Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AnonymizeCompletionResponse]
+            Anonymize progress for the chat completion
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"chat/completions/{encode_path_param(id)}/anonymize",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AnonymizeCompletionResponse,
+                    parse_obj_as(
+                        type_=AnonymizeCompletionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

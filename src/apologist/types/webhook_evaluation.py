@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class WebhookEvaluation(UniversalBaseModel):
     """
-    Result of an evaluation run for CTA/guardrail events.
+    Result of an evaluation run for CTA, guardrail, or automation events.
     """
 
     score: typing.Optional[float] = None

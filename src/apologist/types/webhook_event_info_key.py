@@ -7,6 +7,7 @@ WebhookEventInfoKey = typing.Union[
         "prompt_submit",
         "response_start",
         "response_end",
+        "automation_trigger",
         "automations_end",
         "response_like",
         "response_flag",

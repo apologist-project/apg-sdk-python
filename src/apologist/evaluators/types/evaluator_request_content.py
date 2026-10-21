@@ -2,4 +2,6 @@
 
 import typing
 
-EvaluatorRequestContent = typing.Union[str, typing.List[typing.Any]]
+from .evaluator_request_content_one_item import EvaluatorRequestContentOneItem
+
+EvaluatorRequestContent = typing.Union[str, typing.List[EvaluatorRequestContentOneItem]]

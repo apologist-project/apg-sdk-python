@@ -7,23 +7,16 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .agent_pause_state import AgentPauseState
-    from .chat_completion_request import ChatCompletionRequest
-    from .chat_completion_request_logprobs import ChatCompletionRequestLogprobs
-    from .chat_completion_request_metadata import ChatCompletionRequestMetadata
-    from .chat_completion_request_reasoning_effort import ChatCompletionRequestReasoningEffort
-    from .chat_completion_request_response_format import ChatCompletionRequestResponseFormat
-    from .chat_completion_request_response_format_json_schema import ChatCompletionRequestResponseFormatJsonSchema
-    from .chat_completion_request_response_format_type import ChatCompletionRequestResponseFormatType
-    from .chat_completion_request_tool_choice import ChatCompletionRequestToolChoice
-    from .chat_completion_request_tool_choice_zero import ChatCompletionRequestToolChoiceZero
-    from .chat_completion_request_verbosity import ChatCompletionRequestVerbosity
     from .chat_completion_response import ChatCompletionResponse
     from .chat_completion_response_choices_item import ChatCompletionResponseChoicesItem
     from .chat_completion_response_usage import ChatCompletionResponseUsage
     from .chat_message import ChatMessage
     from .chat_message_role import ChatMessageRole
+    from .chatwoot_conversation_meta import ChatwootConversationMeta
+    from .chatwoot_conversation_meta_sender import ChatwootConversationMetaSender
+    from .completion_redact_response import CompletionRedactResponse
+    from .completion_redact_response_mode import CompletionRedactResponseMode
     from .conversation import Conversation
-    from .cta_match_request import CtaMatchRequest
     from .error import Error
     from .success_response import SuccessResponse
     from .tag_ref import TagRef
@@ -39,25 +32,19 @@ if typing.TYPE_CHECKING:
     from .webhook_named_ref import WebhookNamedRef
     from .webhook_notification_ref import WebhookNotificationRef
     from .webhook_payload import WebhookPayload
+    from .webhook_payload_trace import WebhookPayloadTrace
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentPauseState": ".agent_pause_state",
-    "ChatCompletionRequest": ".chat_completion_request",
-    "ChatCompletionRequestLogprobs": ".chat_completion_request_logprobs",
-    "ChatCompletionRequestMetadata": ".chat_completion_request_metadata",
-    "ChatCompletionRequestReasoningEffort": ".chat_completion_request_reasoning_effort",
-    "ChatCompletionRequestResponseFormat": ".chat_completion_request_response_format",
-    "ChatCompletionRequestResponseFormatJsonSchema": ".chat_completion_request_response_format_json_schema",
-    "ChatCompletionRequestResponseFormatType": ".chat_completion_request_response_format_type",
-    "ChatCompletionRequestToolChoice": ".chat_completion_request_tool_choice",
-    "ChatCompletionRequestToolChoiceZero": ".chat_completion_request_tool_choice_zero",
-    "ChatCompletionRequestVerbosity": ".chat_completion_request_verbosity",
     "ChatCompletionResponse": ".chat_completion_response",
     "ChatCompletionResponseChoicesItem": ".chat_completion_response_choices_item",
     "ChatCompletionResponseUsage": ".chat_completion_response_usage",
     "ChatMessage": ".chat_message",
     "ChatMessageRole": ".chat_message_role",
+    "ChatwootConversationMeta": ".chatwoot_conversation_meta",
+    "ChatwootConversationMetaSender": ".chatwoot_conversation_meta_sender",
+    "CompletionRedactResponse": ".completion_redact_response",
+    "CompletionRedactResponseMode": ".completion_redact_response_mode",
     "Conversation": ".conversation",
-    "CtaMatchRequest": ".cta_match_request",
     "Error": ".error",
     "SuccessResponse": ".success_response",
     "TagRef": ".tag_ref",
@@ -73,6 +60,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookNamedRef": ".webhook_named_ref",
     "WebhookNotificationRef": ".webhook_notification_ref",
     "WebhookPayload": ".webhook_payload",
+    "WebhookPayloadTrace": ".webhook_payload_trace",
 }
 
 
@@ -99,23 +87,16 @@ def __dir__():
 
 __all__ = [
     "AgentPauseState",
-    "ChatCompletionRequest",
-    "ChatCompletionRequestLogprobs",
-    "ChatCompletionRequestMetadata",
-    "ChatCompletionRequestReasoningEffort",
-    "ChatCompletionRequestResponseFormat",
-    "ChatCompletionRequestResponseFormatJsonSchema",
-    "ChatCompletionRequestResponseFormatType",
-    "ChatCompletionRequestToolChoice",
-    "ChatCompletionRequestToolChoiceZero",
-    "ChatCompletionRequestVerbosity",
     "ChatCompletionResponse",
     "ChatCompletionResponseChoicesItem",
     "ChatCompletionResponseUsage",
     "ChatMessage",
     "ChatMessageRole",
+    "ChatwootConversationMeta",
+    "ChatwootConversationMetaSender",
+    "CompletionRedactResponse",
+    "CompletionRedactResponseMode",
     "Conversation",
-    "CtaMatchRequest",
     "Error",
     "SuccessResponse",
     "TagRef",
@@ -131,4 +112,5 @@ __all__ = [
     "WebhookNamedRef",
     "WebhookNotificationRef",
     "WebhookPayload",
+    "WebhookPayloadTrace",
 ]

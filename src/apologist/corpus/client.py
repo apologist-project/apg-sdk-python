@@ -89,7 +89,7 @@ class CorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -139,7 +139,7 @@ class CorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -190,7 +190,7 @@ class CorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The numeric ID of the corpus item
@@ -243,7 +243,7 @@ class CorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -363,7 +363,7 @@ class AsyncCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -421,7 +421,7 @@ class AsyncCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -480,7 +480,7 @@ class AsyncCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The numeric ID of the corpus item
@@ -541,7 +541,7 @@ class AsyncCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item

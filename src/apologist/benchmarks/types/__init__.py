@@ -7,12 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .benchmark_run_request_content import BenchmarkRunRequestContent
+    from .benchmark_run_request_content_one_item import BenchmarkRunRequestContentOneItem
     from .benchmark_run_request_reasoning_effort import BenchmarkRunRequestReasoningEffort
     from .benchmark_run_request_verbosity import BenchmarkRunRequestVerbosity
     from .get_benchmark_run_response import GetBenchmarkRunResponse
     from .list_benchmark_runs_response import ListBenchmarkRunsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "BenchmarkRunRequestContent": ".benchmark_run_request_content",
+    "BenchmarkRunRequestContentOneItem": ".benchmark_run_request_content_one_item",
     "BenchmarkRunRequestReasoningEffort": ".benchmark_run_request_reasoning_effort",
     "BenchmarkRunRequestVerbosity": ".benchmark_run_request_verbosity",
     "GetBenchmarkRunResponse": ".get_benchmark_run_response",
@@ -43,6 +45,7 @@ def __dir__():
 
 __all__ = [
     "BenchmarkRunRequestContent",
+    "BenchmarkRunRequestContentOneItem",
     "BenchmarkRunRequestReasoningEffort",
     "BenchmarkRunRequestVerbosity",
     "GetBenchmarkRunResponse",
