@@ -7,6 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        ChatwootWebhookPayloadAccount,
+        ChatwootWebhookPayloadConversation,
+        ChatwootWebhookPayloadConversationAccount,
+        ChatwootWebhookPayloadSender,
         GetChatwootChannelStatusResponse,
         GetDiscordChannelStatusResponse,
         GetLineChannelStatusResponse,
@@ -14,6 +18,10 @@ if typing.TYPE_CHECKING:
         VerifyWhatsAppWebhookRequestHubMode,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "ChatwootWebhookPayloadAccount": ".types",
+    "ChatwootWebhookPayloadConversation": ".types",
+    "ChatwootWebhookPayloadConversationAccount": ".types",
+    "ChatwootWebhookPayloadSender": ".types",
     "GetChatwootChannelStatusResponse": ".types",
     "GetDiscordChannelStatusResponse": ".types",
     "GetLineChannelStatusResponse": ".types",
@@ -44,6 +52,10 @@ def __dir__():
 
 
 __all__ = [
+    "ChatwootWebhookPayloadAccount",
+    "ChatwootWebhookPayloadConversation",
+    "ChatwootWebhookPayloadConversationAccount",
+    "ChatwootWebhookPayloadSender",
     "GetChatwootChannelStatusResponse",
     "GetDiscordChannelStatusResponse",
     "GetLineChannelStatusResponse",

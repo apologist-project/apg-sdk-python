@@ -15,7 +15,7 @@ from ..errors.forbidden_error import ForbiddenError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.cta_match_request import CtaMatchRequest
+from ..types.chat_message import ChatMessage
 from ..types.error import Error
 from ..types.success_response import SuccessResponse
 from .types.match_ctas_response import MatchCtasResponse
@@ -30,14 +30,44 @@ class RawCtAsClient:
         self._client_wrapper = client_wrapper
 
     def match_ctas(
-        self, *, request: CtaMatchRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        conversation: typing.Optional[str] = OMIT,
+        client: typing.Optional[str] = OMIT,
+        device: typing.Optional[str] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        limit: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        session: typing.Optional[str] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MatchCtasResponse]:
         """
         Finds matching CTAs based on conversation context, user, session, device, or messages
 
         Parameters
         ----------
-        request : CtaMatchRequest
+        conversation : typing.Optional[str]
+
+        client : typing.Optional[str]
+
+        device : typing.Optional[str]
+
+        language : typing.Optional[str]
+            ISO language code, or `auto` to detect from the prompt.
+
+        limit : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format.
+
+        session : typing.Optional[str]
+
+        user : typing.Optional[str]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Flat string key/value pairs substituted into `{key}` placeholders in evaluator prompts run during CTA matching. Not persisted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -50,9 +80,22 @@ class RawCtAsClient:
         _response = self._client_wrapper.httpx_client.request(
             "ctas/match",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=CtaMatchRequest, direction="write"
-            ),
+            json={
+                "conversation": conversation,
+                "client": client,
+                "device": device,
+                "language": language,
+                "limit": limit,
+                "messages": convert_and_respect_annotation_metadata(
+                    object_=messages, annotation=typing.Optional[typing.Sequence[ChatMessage]], direction="write"
+                ),
+                "session": session,
+                "user": user,
+                "variables": variables,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -210,14 +253,44 @@ class AsyncRawCtAsClient:
         self._client_wrapper = client_wrapper
 
     async def match_ctas(
-        self, *, request: CtaMatchRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        conversation: typing.Optional[str] = OMIT,
+        client: typing.Optional[str] = OMIT,
+        device: typing.Optional[str] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        limit: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        session: typing.Optional[str] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        variables: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MatchCtasResponse]:
         """
         Finds matching CTAs based on conversation context, user, session, device, or messages
 
         Parameters
         ----------
-        request : CtaMatchRequest
+        conversation : typing.Optional[str]
+
+        client : typing.Optional[str]
+
+        device : typing.Optional[str]
+
+        language : typing.Optional[str]
+            ISO language code, or `auto` to detect from the prompt.
+
+        limit : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format.
+
+        session : typing.Optional[str]
+
+        user : typing.Optional[str]
+
+        variables : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Flat string key/value pairs substituted into `{key}` placeholders in evaluator prompts run during CTA matching. Not persisted.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -230,9 +303,22 @@ class AsyncRawCtAsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "ctas/match",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=CtaMatchRequest, direction="write"
-            ),
+            json={
+                "conversation": conversation,
+                "client": client,
+                "device": device,
+                "language": language,
+                "limit": limit,
+                "messages": convert_and_respect_annotation_metadata(
+                    object_=messages, annotation=typing.Optional[typing.Sequence[ChatMessage]], direction="write"
+                ),
+                "session": session,
+                "user": user,
+                "variables": variables,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

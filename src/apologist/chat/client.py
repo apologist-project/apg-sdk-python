@@ -4,12 +4,20 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.chat_completion_request import ChatCompletionRequest
 from ..types.chat_completion_response import ChatCompletionResponse
+from ..types.chat_message import ChatMessage
 from ..types.success_response import SuccessResponse
 from .raw_client import AsyncRawChatClient, RawChatClient
+from .types.anonymize_completion_response import AnonymizeCompletionResponse
+from .types.chat_completion_request_logprobs import ChatCompletionRequestLogprobs
+from .types.chat_completion_request_metadata import ChatCompletionRequestMetadata
+from .types.chat_completion_request_reasoning_effort import ChatCompletionRequestReasoningEffort
+from .types.chat_completion_request_response_format import ChatCompletionRequestResponseFormat
+from .types.chat_completion_request_tool_choice import ChatCompletionRequestToolChoice
+from .types.chat_completion_request_verbosity import ChatCompletionRequestVerbosity
 from .types.get_chat_completion_response import GetChatCompletionResponse
 from .types.list_chat_completions_response import ListChatCompletionsResponse
+from .types.scrub_completion_response import ScrubCompletionResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -51,6 +59,9 @@ class ChatClient:
         user_id: typing.Optional[str] = None,
         min_timestamp: typing.Optional[str] = None,
         max_timestamp: typing.Optional[str] = None,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListChatCompletionsResponse:
         """
@@ -95,6 +106,15 @@ class ChatClient:
 
         max_timestamp : typing.Optional[str]
 
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -110,7 +130,9 @@ class ChatClient:
         client = ApologistAgentClient(
             api_key="YOUR_API_KEY",
         )
-        client.chat.list_chat_completions()
+        client.chat.list_chat_completions(
+            traceparent="00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+        )
         """
         _response = self._raw_client.list_chat_completions(
             page=page,
@@ -131,19 +153,128 @@ class ChatClient:
             user_id=user_id,
             min_timestamp=min_timestamp,
             max_timestamp=max_timestamp,
+            traceparent=traceparent,
+            tracestate=tracestate,
+            baggage=baggage,
             request_options=request_options,
         )
         return _response.data
 
     def create_chat_completion(
-        self, *, request: ChatCompletionRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
+        audio: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        frequency_penalty: typing.Optional[float] = OMIT,
+        logit_bias: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        logprobs: typing.Optional[ChatCompletionRequestLogprobs] = OMIT,
+        top_logprobs: typing.Optional[int] = OMIT,
+        max_completion_tokens: typing.Optional[int] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        metadata: typing.Optional[ChatCompletionRequestMetadata] = OMIT,
+        modalities: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        model: typing.Optional[str] = OMIT,
+        n: typing.Optional[int] = OMIT,
+        parallel_tool_calls: typing.Optional[bool] = OMIT,
+        prediction: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        presence_penalty: typing.Optional[float] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        reasoning_effort: typing.Optional[ChatCompletionRequestReasoningEffort] = OMIT,
+        verbosity: typing.Optional[ChatCompletionRequestVerbosity] = OMIT,
+        response_format: typing.Optional[ChatCompletionRequestResponseFormat] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        service_tier: typing.Optional[str] = OMIT,
+        stop: typing.Optional[str] = OMIT,
+        store: typing.Optional[bool] = OMIT,
+        stream: typing.Optional[bool] = OMIT,
+        stream_options: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        temperature: typing.Optional[float] = OMIT,
+        top_p: typing.Optional[float] = OMIT,
+        tools: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        tool_choice: typing.Optional[ChatCompletionRequestToolChoice] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ChatCompletionResponse:
         """
         Creates a chat completion using the agent's configured model. Supports both streaming and non-streaming responses.
 
         Parameters
         ----------
-        request : ChatCompletionRequest
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
+        audio : typing.Optional[typing.Dict[str, typing.Any]]
+
+        frequency_penalty : typing.Optional[float]
+
+        logit_bias : typing.Optional[typing.Dict[str, typing.Any]]
+
+        logprobs : typing.Optional[ChatCompletionRequestLogprobs]
+
+        top_logprobs : typing.Optional[int]
+
+        max_completion_tokens : typing.Optional[int]
+            Output-token cap for this request. An API key may set this above the agent's Max Output Tokens. The value cannot exceed the model's maximum. Requests without an API key keep the agent's Max Output Tokens.
+
+        max_tokens : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format. Required when `prompt` is omitted.
+
+        metadata : typing.Optional[ChatCompletionRequestMetadata]
+
+        modalities : typing.Optional[typing.Sequence[typing.Any]]
+
+        model : typing.Optional[str]
+
+        n : typing.Optional[int]
+
+        parallel_tool_calls : typing.Optional[bool]
+
+        prediction : typing.Optional[typing.Dict[str, typing.Any]]
+
+        presence_penalty : typing.Optional[float]
+
+        prompt : typing.Optional[str]
+            User text to complete. Required when `messages` is omitted.
+
+        reasoning_effort : typing.Optional[ChatCompletionRequestReasoningEffort]
+
+        verbosity : typing.Optional[ChatCompletionRequestVerbosity]
+
+        response_format : typing.Optional[ChatCompletionRequestResponseFormat]
+
+        seed : typing.Optional[int]
+
+        service_tier : typing.Optional[str]
+
+        stop : typing.Optional[str]
+
+        store : typing.Optional[bool]
+
+        stream : typing.Optional[bool]
+
+        stream_options : typing.Optional[typing.Dict[str, typing.Any]]
+
+        temperature : typing.Optional[float]
+
+        top_p : typing.Optional[float]
+
+        tools : typing.Optional[typing.Sequence[typing.Any]]
+            OpenAI-compatible function tool definitions. Passed through to the model as declaration-only tools (the client executes them and returns role=tool messages).
+
+        tool_choice : typing.Optional[ChatCompletionRequestToolChoice]
+
+        user : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -161,10 +292,45 @@ class ChatClient:
             api_key="YOUR_API_KEY",
         )
         client.chat.create_chat_completion(
-            request={"key": "value"},
+            traceparent="00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
         )
         """
-        _response = self._raw_client.create_chat_completion(request=request, request_options=request_options)
+        _response = self._raw_client.create_chat_completion(
+            traceparent=traceparent,
+            tracestate=tracestate,
+            baggage=baggage,
+            audio=audio,
+            frequency_penalty=frequency_penalty,
+            logit_bias=logit_bias,
+            logprobs=logprobs,
+            top_logprobs=top_logprobs,
+            max_completion_tokens=max_completion_tokens,
+            max_tokens=max_tokens,
+            messages=messages,
+            metadata=metadata,
+            modalities=modalities,
+            model=model,
+            n=n,
+            parallel_tool_calls=parallel_tool_calls,
+            prediction=prediction,
+            presence_penalty=presence_penalty,
+            prompt=prompt,
+            reasoning_effort=reasoning_effort,
+            verbosity=verbosity,
+            response_format=response_format,
+            seed=seed,
+            service_tier=service_tier,
+            stop=stop,
+            store=store,
+            stream=stream,
+            stream_options=stream_options,
+            temperature=temperature,
+            top_p=top_p,
+            tools=tools,
+            tool_choice=tool_choice,
+            user=user,
+            request_options=request_options,
+        )
         return _response.data
 
     def like_completion(
@@ -322,6 +488,72 @@ class ChatClient:
         )
         return _response.data
 
+    def scrub_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ScrubCompletionResponse:
+        """
+        Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ScrubCompletionResponse
+            Scrub progress for the chat completion
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.chat.scrub_completion(
+            id="id",
+        )
+        """
+        _response = self._raw_client.scrub_completion(id, request_options=request_options)
+        return _response.data
+
+    def anonymize_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AnonymizeCompletionResponse:
+        """
+        Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AnonymizeCompletionResponse
+            Anonymize progress for the chat completion
+
+        Examples
+        --------
+        from apologist import ApologistAgentClient
+
+        client = ApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.chat.anonymize_completion(
+            id="id",
+        )
+        """
+        _response = self._raw_client.anonymize_completion(id, request_options=request_options)
+        return _response.data
+
     def get_chat_completion(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetChatCompletionResponse:
@@ -392,6 +624,9 @@ class AsyncChatClient:
         user_id: typing.Optional[str] = None,
         min_timestamp: typing.Optional[str] = None,
         max_timestamp: typing.Optional[str] = None,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListChatCompletionsResponse:
         """
@@ -436,6 +671,15 @@ class AsyncChatClient:
 
         max_timestamp : typing.Optional[str]
 
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -456,7 +700,9 @@ class AsyncChatClient:
 
 
         async def main() -> None:
-            await client.chat.list_chat_completions()
+            await client.chat.list_chat_completions(
+                traceparent="00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+            )
 
 
         asyncio.run(main())
@@ -480,19 +726,128 @@ class AsyncChatClient:
             user_id=user_id,
             min_timestamp=min_timestamp,
             max_timestamp=max_timestamp,
+            traceparent=traceparent,
+            tracestate=tracestate,
+            baggage=baggage,
             request_options=request_options,
         )
         return _response.data
 
     async def create_chat_completion(
-        self, *, request: ChatCompletionRequest, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        traceparent: typing.Optional[str] = None,
+        tracestate: typing.Optional[str] = None,
+        baggage: typing.Optional[str] = None,
+        audio: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        frequency_penalty: typing.Optional[float] = OMIT,
+        logit_bias: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        logprobs: typing.Optional[ChatCompletionRequestLogprobs] = OMIT,
+        top_logprobs: typing.Optional[int] = OMIT,
+        max_completion_tokens: typing.Optional[int] = OMIT,
+        max_tokens: typing.Optional[int] = OMIT,
+        messages: typing.Optional[typing.Sequence[ChatMessage]] = OMIT,
+        metadata: typing.Optional[ChatCompletionRequestMetadata] = OMIT,
+        modalities: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        model: typing.Optional[str] = OMIT,
+        n: typing.Optional[int] = OMIT,
+        parallel_tool_calls: typing.Optional[bool] = OMIT,
+        prediction: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        presence_penalty: typing.Optional[float] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        reasoning_effort: typing.Optional[ChatCompletionRequestReasoningEffort] = OMIT,
+        verbosity: typing.Optional[ChatCompletionRequestVerbosity] = OMIT,
+        response_format: typing.Optional[ChatCompletionRequestResponseFormat] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        service_tier: typing.Optional[str] = OMIT,
+        stop: typing.Optional[str] = OMIT,
+        store: typing.Optional[bool] = OMIT,
+        stream: typing.Optional[bool] = OMIT,
+        stream_options: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        temperature: typing.Optional[float] = OMIT,
+        top_p: typing.Optional[float] = OMIT,
+        tools: typing.Optional[typing.Sequence[typing.Any]] = OMIT,
+        tool_choice: typing.Optional[ChatCompletionRequestToolChoice] = OMIT,
+        user: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ChatCompletionResponse:
         """
         Creates a chat completion using the agent's configured model. Supports both streaming and non-streaming responses.
 
         Parameters
         ----------
-        request : ChatCompletionRequest
+        traceparent : typing.Optional[str]
+            W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+
+        tracestate : typing.Optional[str]
+            Optional W3C tracestate associated with traceparent.
+
+        baggage : typing.Optional[str]
+            Optional W3C baggage. Prompt text is never copied onto spans.
+
+        audio : typing.Optional[typing.Dict[str, typing.Any]]
+
+        frequency_penalty : typing.Optional[float]
+
+        logit_bias : typing.Optional[typing.Dict[str, typing.Any]]
+
+        logprobs : typing.Optional[ChatCompletionRequestLogprobs]
+
+        top_logprobs : typing.Optional[int]
+
+        max_completion_tokens : typing.Optional[int]
+            Output-token cap for this request. An API key may set this above the agent's Max Output Tokens. The value cannot exceed the model's maximum. Requests without an API key keep the agent's Max Output Tokens.
+
+        max_tokens : typing.Optional[int]
+
+        messages : typing.Optional[typing.Sequence[ChatMessage]]
+            Chat messages in OpenAI format. Required when `prompt` is omitted.
+
+        metadata : typing.Optional[ChatCompletionRequestMetadata]
+
+        modalities : typing.Optional[typing.Sequence[typing.Any]]
+
+        model : typing.Optional[str]
+
+        n : typing.Optional[int]
+
+        parallel_tool_calls : typing.Optional[bool]
+
+        prediction : typing.Optional[typing.Dict[str, typing.Any]]
+
+        presence_penalty : typing.Optional[float]
+
+        prompt : typing.Optional[str]
+            User text to complete. Required when `messages` is omitted.
+
+        reasoning_effort : typing.Optional[ChatCompletionRequestReasoningEffort]
+
+        verbosity : typing.Optional[ChatCompletionRequestVerbosity]
+
+        response_format : typing.Optional[ChatCompletionRequestResponseFormat]
+
+        seed : typing.Optional[int]
+
+        service_tier : typing.Optional[str]
+
+        stop : typing.Optional[str]
+
+        store : typing.Optional[bool]
+
+        stream : typing.Optional[bool]
+
+        stream_options : typing.Optional[typing.Dict[str, typing.Any]]
+
+        temperature : typing.Optional[float]
+
+        top_p : typing.Optional[float]
+
+        tools : typing.Optional[typing.Sequence[typing.Any]]
+            OpenAI-compatible function tool definitions. Passed through to the model as declaration-only tools (the client executes them and returns role=tool messages).
+
+        tool_choice : typing.Optional[ChatCompletionRequestToolChoice]
+
+        user : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -515,13 +870,48 @@ class AsyncChatClient:
 
         async def main() -> None:
             await client.chat.create_chat_completion(
-                request={"key": "value"},
+                traceparent="00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_chat_completion(request=request, request_options=request_options)
+        _response = await self._raw_client.create_chat_completion(
+            traceparent=traceparent,
+            tracestate=tracestate,
+            baggage=baggage,
+            audio=audio,
+            frequency_penalty=frequency_penalty,
+            logit_bias=logit_bias,
+            logprobs=logprobs,
+            top_logprobs=top_logprobs,
+            max_completion_tokens=max_completion_tokens,
+            max_tokens=max_tokens,
+            messages=messages,
+            metadata=metadata,
+            modalities=modalities,
+            model=model,
+            n=n,
+            parallel_tool_calls=parallel_tool_calls,
+            prediction=prediction,
+            presence_penalty=presence_penalty,
+            prompt=prompt,
+            reasoning_effort=reasoning_effort,
+            verbosity=verbosity,
+            response_format=response_format,
+            seed=seed,
+            service_tier=service_tier,
+            stop=stop,
+            store=store,
+            stream=stream,
+            stream_options=stream_options,
+            temperature=temperature,
+            top_p=top_p,
+            tools=tools,
+            tool_choice=tool_choice,
+            user=user,
+            request_options=request_options,
+        )
         return _response.data
 
     async def like_completion(
@@ -709,6 +1099,88 @@ class AsyncChatClient:
         _response = await self._raw_client.share_completion(
             id, conversation_id=conversation_id, session_id=session_id, user_id=user_id, request_options=request_options
         )
+        return _response.data
+
+    async def scrub_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ScrubCompletionResponse:
+        """
+        Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ScrubCompletionResponse
+            Scrub progress for the chat completion
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.chat.scrub_completion(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.scrub_completion(id, request_options=request_options)
+        return _response.data
+
+    async def anonymize_completion(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AnonymizeCompletionResponse:
+        """
+        Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+
+        Parameters
+        ----------
+        id : str
+            The numeric id or UUID of the chat completion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AnonymizeCompletionResponse
+            Anonymize progress for the chat completion
+
+        Examples
+        --------
+        import asyncio
+
+        from apologist import AsyncApologistAgentClient
+
+        client = AsyncApologistAgentClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.chat.anonymize_completion(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.anonymize_completion(id, request_options=request_options)
         return _response.data
 
     async def get_chat_completion(

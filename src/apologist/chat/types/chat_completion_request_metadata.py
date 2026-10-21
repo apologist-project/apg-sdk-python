@@ -3,13 +3,17 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ChatCompletionRequestMetadata(UniversalBaseModel):
     anonymous: typing.Optional[bool] = None
     conversation: typing.Optional[str] = None
-    language: typing.Optional[str] = None
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ISO language code for this turn, or `auto` to detect from the prompt.
+    """
+
     max_memories: typing.Optional[int] = None
     parent_url: typing.Optional[str] = None
     parent_host: typing.Optional[str] = None

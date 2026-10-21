@@ -6,11 +6,33 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .anonymize_completion_response import AnonymizeCompletionResponse
+    from .chat_completion_request_logprobs import ChatCompletionRequestLogprobs
+    from .chat_completion_request_metadata import ChatCompletionRequestMetadata
+    from .chat_completion_request_reasoning_effort import ChatCompletionRequestReasoningEffort
+    from .chat_completion_request_response_format import ChatCompletionRequestResponseFormat
+    from .chat_completion_request_response_format_json_schema import ChatCompletionRequestResponseFormatJsonSchema
+    from .chat_completion_request_response_format_type import ChatCompletionRequestResponseFormatType
+    from .chat_completion_request_tool_choice import ChatCompletionRequestToolChoice
+    from .chat_completion_request_tool_choice_zero import ChatCompletionRequestToolChoiceZero
+    from .chat_completion_request_verbosity import ChatCompletionRequestVerbosity
     from .get_chat_completion_response import GetChatCompletionResponse
     from .list_chat_completions_response import ListChatCompletionsResponse
+    from .scrub_completion_response import ScrubCompletionResponse
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnonymizeCompletionResponse": ".anonymize_completion_response",
+    "ChatCompletionRequestLogprobs": ".chat_completion_request_logprobs",
+    "ChatCompletionRequestMetadata": ".chat_completion_request_metadata",
+    "ChatCompletionRequestReasoningEffort": ".chat_completion_request_reasoning_effort",
+    "ChatCompletionRequestResponseFormat": ".chat_completion_request_response_format",
+    "ChatCompletionRequestResponseFormatJsonSchema": ".chat_completion_request_response_format_json_schema",
+    "ChatCompletionRequestResponseFormatType": ".chat_completion_request_response_format_type",
+    "ChatCompletionRequestToolChoice": ".chat_completion_request_tool_choice",
+    "ChatCompletionRequestToolChoiceZero": ".chat_completion_request_tool_choice_zero",
+    "ChatCompletionRequestVerbosity": ".chat_completion_request_verbosity",
     "GetChatCompletionResponse": ".get_chat_completion_response",
     "ListChatCompletionsResponse": ".list_chat_completions_response",
+    "ScrubCompletionResponse": ".scrub_completion_response",
 }
 
 
@@ -35,4 +57,18 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetChatCompletionResponse", "ListChatCompletionsResponse"]
+__all__ = [
+    "AnonymizeCompletionResponse",
+    "ChatCompletionRequestLogprobs",
+    "ChatCompletionRequestMetadata",
+    "ChatCompletionRequestReasoningEffort",
+    "ChatCompletionRequestResponseFormat",
+    "ChatCompletionRequestResponseFormatJsonSchema",
+    "ChatCompletionRequestResponseFormatType",
+    "ChatCompletionRequestToolChoice",
+    "ChatCompletionRequestToolChoiceZero",
+    "ChatCompletionRequestVerbosity",
+    "GetChatCompletionResponse",
+    "ListChatCompletionsResponse",
+    "ScrubCompletionResponse",
+]

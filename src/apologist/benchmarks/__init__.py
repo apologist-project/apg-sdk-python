@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         BenchmarkRunRequestContent,
+        BenchmarkRunRequestContentOneItem,
         BenchmarkRunRequestReasoningEffort,
         BenchmarkRunRequestVerbosity,
         GetBenchmarkRunResponse,
@@ -15,6 +16,7 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BenchmarkRunRequestContent": ".types",
+    "BenchmarkRunRequestContentOneItem": ".types",
     "BenchmarkRunRequestReasoningEffort": ".types",
     "BenchmarkRunRequestVerbosity": ".types",
     "GetBenchmarkRunResponse": ".types",
@@ -45,6 +47,7 @@ def __dir__():
 
 __all__ = [
     "BenchmarkRunRequestContent",
+    "BenchmarkRunRequestContentOneItem",
     "BenchmarkRunRequestReasoningEffort",
     "BenchmarkRunRequestVerbosity",
     "GetBenchmarkRunResponse",

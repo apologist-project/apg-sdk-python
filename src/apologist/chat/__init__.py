@@ -6,10 +6,35 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import GetChatCompletionResponse, ListChatCompletionsResponse
+    from .types import (
+        AnonymizeCompletionResponse,
+        ChatCompletionRequestLogprobs,
+        ChatCompletionRequestMetadata,
+        ChatCompletionRequestReasoningEffort,
+        ChatCompletionRequestResponseFormat,
+        ChatCompletionRequestResponseFormatJsonSchema,
+        ChatCompletionRequestResponseFormatType,
+        ChatCompletionRequestToolChoice,
+        ChatCompletionRequestToolChoiceZero,
+        ChatCompletionRequestVerbosity,
+        GetChatCompletionResponse,
+        ListChatCompletionsResponse,
+        ScrubCompletionResponse,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnonymizeCompletionResponse": ".types",
+    "ChatCompletionRequestLogprobs": ".types",
+    "ChatCompletionRequestMetadata": ".types",
+    "ChatCompletionRequestReasoningEffort": ".types",
+    "ChatCompletionRequestResponseFormat": ".types",
+    "ChatCompletionRequestResponseFormatJsonSchema": ".types",
+    "ChatCompletionRequestResponseFormatType": ".types",
+    "ChatCompletionRequestToolChoice": ".types",
+    "ChatCompletionRequestToolChoiceZero": ".types",
+    "ChatCompletionRequestVerbosity": ".types",
     "GetChatCompletionResponse": ".types",
     "ListChatCompletionsResponse": ".types",
+    "ScrubCompletionResponse": ".types",
 }
 
 
@@ -34,4 +59,18 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetChatCompletionResponse", "ListChatCompletionsResponse"]
+__all__ = [
+    "AnonymizeCompletionResponse",
+    "ChatCompletionRequestLogprobs",
+    "ChatCompletionRequestMetadata",
+    "ChatCompletionRequestReasoningEffort",
+    "ChatCompletionRequestResponseFormat",
+    "ChatCompletionRequestResponseFormatJsonSchema",
+    "ChatCompletionRequestResponseFormatType",
+    "ChatCompletionRequestToolChoice",
+    "ChatCompletionRequestToolChoiceZero",
+    "ChatCompletionRequestVerbosity",
+    "GetChatCompletionResponse",
+    "ListChatCompletionsResponse",
+    "ScrubCompletionResponse",
+]
