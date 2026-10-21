@@ -188,6 +188,7 @@ class RawEvaluatorsClient:
             The ID or key of the evaluator
 
         content : EvaluatorRequestContent
+            Text to evaluate, an array of strings, or chat messages.
 
         frequency_penalty : typing.Optional[float]
 
@@ -541,6 +542,7 @@ class AsyncRawEvaluatorsClient:
             The ID or key of the evaluator
 
         content : EvaluatorRequestContent
+            Text to evaluate, an array of strings, or chat messages.
 
         frequency_penalty : typing.Optional[float]
 

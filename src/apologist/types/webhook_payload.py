@@ -10,11 +10,12 @@ from .webhook_evaluation import WebhookEvaluation
 from .webhook_event_info import WebhookEventInfo
 from .webhook_named_ref import WebhookNamedRef
 from .webhook_notification_ref import WebhookNotificationRef
+from .webhook_payload_trace import WebhookPayloadTrace
 
 
 class WebhookPayload(UniversalBaseModel):
     """
-    Canonical JSON body POSTed to a configured webhook URL. `notification`, `event`, and `agent` are always present; the remaining sections appear only when relevant to the event. Treat the payload as additive and ignore unrecognised fields.
+    Canonical JSON body POSTed to a configured webhook URL. `notification`, `event`, and `agent` are always present; `trace` is present when the event ran inside an instrumented API request. The remaining sections appear only when relevant to the event. Treat the payload as additive and ignore unrecognised fields.
     """
 
     notification: WebhookNotificationRef
@@ -45,12 +46,21 @@ class WebhookPayload(UniversalBaseModel):
     Present for guardrail_trigger events.
     """
 
+    automation: typing.Optional[WebhookNamedRef] = pydantic.Field(default=None)
+    """
+    Present for automation_trigger events.
+    """
+
     evaluator: typing.Optional[WebhookNamedRef] = pydantic.Field(default=None)
     """
-    Present for CTA/guardrail events that ran an evaluation.
+    Present for CTA, guardrail, or automation events that ran an evaluation.
     """
 
     evaluation: typing.Optional[WebhookEvaluation] = None
+    trace: typing.Optional[WebhookPayloadTrace] = pydantic.Field(default=None)
+    """
+    OpenTelemetry context for the API request that produced this event. Present when the Agent created or continued a W3C trace.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

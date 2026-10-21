@@ -10,12 +10,17 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.bad_request_error import BadRequestError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.unauthorized_error import UnauthorizedError
+from ..types.chatwoot_conversation_meta import ChatwootConversationMeta
+from .types.chatwoot_webhook_payload_account import ChatwootWebhookPayloadAccount
+from .types.chatwoot_webhook_payload_conversation import ChatwootWebhookPayloadConversation
+from .types.chatwoot_webhook_payload_sender import ChatwootWebhookPayloadSender
 from .types.get_chatwoot_channel_status_response import GetChatwootChannelStatusResponse
 from .types.get_discord_channel_status_response import GetDiscordChannelStatusResponse
 from .types.get_line_channel_status_response import GetLineChannelStatusResponse
@@ -87,11 +92,20 @@ class RawChannelsClient:
 
     def receive_chatwoot_webhook(
         self,
-        id: str,
+        channel_id: str,
         *,
-        request: typing.Dict[str, typing.Any],
         chatwoot_signature: typing.Optional[str] = None,
         chatwoot_timestamp: typing.Optional[str] = None,
+        event: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        content: typing.Optional[str] = OMIT,
+        message_type: typing.Optional[str] = OMIT,
+        private: typing.Optional[bool] = OMIT,
+        account: typing.Optional[ChatwootWebhookPayloadAccount] = OMIT,
+        sender: typing.Optional[ChatwootWebhookPayloadSender] = OMIT,
+        conversation: typing.Optional[ChatwootWebhookPayloadConversation] = OMIT,
+        status: typing.Optional[str] = OMIT,
+        meta: typing.Optional[ChatwootConversationMeta] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -99,16 +113,43 @@ class RawChannelsClient:
 
         Parameters
         ----------
-        id : str
+        channel_id : str
             The channel id
-
-        request : typing.Dict[str, typing.Any]
 
         chatwoot_signature : typing.Optional[str]
             `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
 
         chatwoot_timestamp : typing.Optional[str]
             Unix timestamp used in the HMAC payload.
+
+        event : typing.Optional[str]
+            Chatwoot event name. Incoming visitor messages use `message_created`. Staff takeover and assignment use conversation events such as `conversation_opened`, `conversation_status_changed`, and `conversation_updated`.
+
+        id : typing.Optional[int]
+            Message id on `message_*` events. Conversation display id on `conversation_*` events.
+
+        content : typing.Optional[str]
+            Message text. Present on message events. Empty or private notes are ignored.
+
+        message_type : typing.Optional[str]
+            Incoming visitor messages are `incoming` (or `0`). Staff replies are `outgoing` (or `1`).
+
+        private : typing.Optional[bool]
+            When true, the Agent ignores the message (Chatwoot private note).
+
+        account : typing.Optional[ChatwootWebhookPayloadAccount]
+
+        sender : typing.Optional[ChatwootWebhookPayloadSender]
+            Present on message events.
+
+        conversation : typing.Optional[ChatwootWebhookPayloadConversation]
+            Nested on message events. Conversation events send `id`, `status`, and `meta` at the top level instead.
+
+        status : typing.Optional[str]
+            Top-level conversation status on conversation events.
+
+        meta : typing.Optional[ChatwootConversationMeta]
+            Top-level conversation meta on conversation events.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -118,9 +159,28 @@ class RawChannelsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"channels/{encode_path_param(id)}/chatwoot",
+            f"channels/{encode_path_param(channel_id)}/chatwoot",
             method="POST",
-            json=request,
+            json={
+                "event": event,
+                "id": id,
+                "content": content,
+                "message_type": message_type,
+                "private": private,
+                "account": convert_and_respect_annotation_metadata(
+                    object_=account, annotation=ChatwootWebhookPayloadAccount, direction="write"
+                ),
+                "sender": convert_and_respect_annotation_metadata(
+                    object_=sender, annotation=ChatwootWebhookPayloadSender, direction="write"
+                ),
+                "conversation": convert_and_respect_annotation_metadata(
+                    object_=conversation, annotation=ChatwootWebhookPayloadConversation, direction="write"
+                ),
+                "status": status,
+                "meta": convert_and_respect_annotation_metadata(
+                    object_=meta, annotation=ChatwootConversationMeta, direction="write"
+                ),
+            },
             headers={
                 "content-type": "application/json",
                 "X-Chatwoot-Signature": str(chatwoot_signature) if chatwoot_signature is not None else None,
@@ -789,7 +849,7 @@ class RawChannelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[str]:
         """
-        Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+        Handles the Meta WhatsApp Cloud API webhook verification handshake. Requires an `api_key` query parameter or `x-api-key` header, then echoes `hub.challenge` when `hub.verify_token` matches the channel's configured token.
 
         Parameters
         ----------
@@ -874,7 +934,7 @@ class RawChannelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
-        Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+        Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. An `api_key` query parameter or `x-api-key` header is required. Signature verification via `x-hub-signature-256` is also required when the channel has an App Secret configured.
 
         Parameters
         ----------
@@ -884,7 +944,7 @@ class RawChannelsClient:
         request : typing.Dict[str, typing.Any]
 
         hub_signature256 : typing.Optional[str]
-            Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+            Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1010,11 +1070,20 @@ class AsyncRawChannelsClient:
 
     async def receive_chatwoot_webhook(
         self,
-        id: str,
+        channel_id: str,
         *,
-        request: typing.Dict[str, typing.Any],
         chatwoot_signature: typing.Optional[str] = None,
         chatwoot_timestamp: typing.Optional[str] = None,
+        event: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        content: typing.Optional[str] = OMIT,
+        message_type: typing.Optional[str] = OMIT,
+        private: typing.Optional[bool] = OMIT,
+        account: typing.Optional[ChatwootWebhookPayloadAccount] = OMIT,
+        sender: typing.Optional[ChatwootWebhookPayloadSender] = OMIT,
+        conversation: typing.Optional[ChatwootWebhookPayloadConversation] = OMIT,
+        status: typing.Optional[str] = OMIT,
+        meta: typing.Optional[ChatwootConversationMeta] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -1022,16 +1091,43 @@ class AsyncRawChannelsClient:
 
         Parameters
         ----------
-        id : str
+        channel_id : str
             The channel id
-
-        request : typing.Dict[str, typing.Any]
 
         chatwoot_signature : typing.Optional[str]
             `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
 
         chatwoot_timestamp : typing.Optional[str]
             Unix timestamp used in the HMAC payload.
+
+        event : typing.Optional[str]
+            Chatwoot event name. Incoming visitor messages use `message_created`. Staff takeover and assignment use conversation events such as `conversation_opened`, `conversation_status_changed`, and `conversation_updated`.
+
+        id : typing.Optional[int]
+            Message id on `message_*` events. Conversation display id on `conversation_*` events.
+
+        content : typing.Optional[str]
+            Message text. Present on message events. Empty or private notes are ignored.
+
+        message_type : typing.Optional[str]
+            Incoming visitor messages are `incoming` (or `0`). Staff replies are `outgoing` (or `1`).
+
+        private : typing.Optional[bool]
+            When true, the Agent ignores the message (Chatwoot private note).
+
+        account : typing.Optional[ChatwootWebhookPayloadAccount]
+
+        sender : typing.Optional[ChatwootWebhookPayloadSender]
+            Present on message events.
+
+        conversation : typing.Optional[ChatwootWebhookPayloadConversation]
+            Nested on message events. Conversation events send `id`, `status`, and `meta` at the top level instead.
+
+        status : typing.Optional[str]
+            Top-level conversation status on conversation events.
+
+        meta : typing.Optional[ChatwootConversationMeta]
+            Top-level conversation meta on conversation events.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1041,9 +1137,28 @@ class AsyncRawChannelsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"channels/{encode_path_param(id)}/chatwoot",
+            f"channels/{encode_path_param(channel_id)}/chatwoot",
             method="POST",
-            json=request,
+            json={
+                "event": event,
+                "id": id,
+                "content": content,
+                "message_type": message_type,
+                "private": private,
+                "account": convert_and_respect_annotation_metadata(
+                    object_=account, annotation=ChatwootWebhookPayloadAccount, direction="write"
+                ),
+                "sender": convert_and_respect_annotation_metadata(
+                    object_=sender, annotation=ChatwootWebhookPayloadSender, direction="write"
+                ),
+                "conversation": convert_and_respect_annotation_metadata(
+                    object_=conversation, annotation=ChatwootWebhookPayloadConversation, direction="write"
+                ),
+                "status": status,
+                "meta": convert_and_respect_annotation_metadata(
+                    object_=meta, annotation=ChatwootConversationMeta, direction="write"
+                ),
+            },
             headers={
                 "content-type": "application/json",
                 "X-Chatwoot-Signature": str(chatwoot_signature) if chatwoot_signature is not None else None,
@@ -1712,7 +1827,7 @@ class AsyncRawChannelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[str]:
         """
-        Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+        Handles the Meta WhatsApp Cloud API webhook verification handshake. Requires an `api_key` query parameter or `x-api-key` header, then echoes `hub.challenge` when `hub.verify_token` matches the channel's configured token.
 
         Parameters
         ----------
@@ -1797,7 +1912,7 @@ class AsyncRawChannelsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
-        Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+        Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. An `api_key` query parameter or `x-api-key` header is required. Signature verification via `x-hub-signature-256` is also required when the channel has an App Secret configured.
 
         Parameters
         ----------
@@ -1807,7 +1922,7 @@ class AsyncRawChannelsClient:
         request : typing.Dict[str, typing.Any]
 
         hub_signature256 : typing.Optional[str]
-            Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+            Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

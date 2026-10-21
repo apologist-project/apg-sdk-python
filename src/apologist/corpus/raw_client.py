@@ -143,7 +143,7 @@ class RawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -240,7 +240,7 @@ class RawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -338,7 +338,7 @@ class RawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The numeric ID of the corpus item
@@ -435,7 +435,7 @@ class RawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -636,7 +636,7 @@ class AsyncRawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -733,7 +733,7 @@ class AsyncRawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item
@@ -831,7 +831,7 @@ class AsyncRawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The numeric ID of the corpus item
@@ -928,7 +928,7 @@ class AsyncRawCorpusClient:
         Parameters
         ----------
         model : str
-            The model type (e.g., 'source')
+            Listing model. One of collection, contributor, organization, or source.
 
         id : str
             The ID of the corpus item

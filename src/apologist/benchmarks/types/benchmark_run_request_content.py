@@ -2,4 +2,8 @@
 
 import typing
 
-BenchmarkRunRequestContent = typing.Union[typing.Optional[str], typing.Optional[typing.List[typing.Any]]]
+from .benchmark_run_request_content_one_item import BenchmarkRunRequestContentOneItem
+
+BenchmarkRunRequestContent = typing.Union[
+    typing.Optional[str], typing.Optional[typing.List[BenchmarkRunRequestContentOneItem]]
+]

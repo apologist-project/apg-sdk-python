@@ -6,12 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .chatwoot_webhook_payload_account import ChatwootWebhookPayloadAccount
+    from .chatwoot_webhook_payload_conversation import ChatwootWebhookPayloadConversation
+    from .chatwoot_webhook_payload_conversation_account import ChatwootWebhookPayloadConversationAccount
+    from .chatwoot_webhook_payload_sender import ChatwootWebhookPayloadSender
     from .get_chatwoot_channel_status_response import GetChatwootChannelStatusResponse
     from .get_discord_channel_status_response import GetDiscordChannelStatusResponse
     from .get_line_channel_status_response import GetLineChannelStatusResponse
     from .verify_facebook_webhook_request_hub_mode import VerifyFacebookWebhookRequestHubMode
     from .verify_whats_app_webhook_request_hub_mode import VerifyWhatsAppWebhookRequestHubMode
 _dynamic_imports: typing.Dict[str, str] = {
+    "ChatwootWebhookPayloadAccount": ".chatwoot_webhook_payload_account",
+    "ChatwootWebhookPayloadConversation": ".chatwoot_webhook_payload_conversation",
+    "ChatwootWebhookPayloadConversationAccount": ".chatwoot_webhook_payload_conversation_account",
+    "ChatwootWebhookPayloadSender": ".chatwoot_webhook_payload_sender",
     "GetChatwootChannelStatusResponse": ".get_chatwoot_channel_status_response",
     "GetDiscordChannelStatusResponse": ".get_discord_channel_status_response",
     "GetLineChannelStatusResponse": ".get_line_channel_status_response",
@@ -42,6 +50,10 @@ def __dir__():
 
 
 __all__ = [
+    "ChatwootWebhookPayloadAccount",
+    "ChatwootWebhookPayloadConversation",
+    "ChatwootWebhookPayloadConversationAccount",
+    "ChatwootWebhookPayloadSender",
     "GetChatwootChannelStatusResponse",
     "GetDiscordChannelStatusResponse",
     "GetLineChannelStatusResponse",
